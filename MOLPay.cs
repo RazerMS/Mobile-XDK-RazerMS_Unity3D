@@ -35,10 +35,12 @@ namespace MOLPayXDK
         private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
         private const String mpcloseallwindows = "mpcloseallwindows//";
         private const String mptransactionresults = "mptransactionresults//";
+        private const String mprunscriptonpopup = "mprunscriptonpopup//";
 #elif UNITY_ANDROID
         private const String mpopenmolpaywindow = "mpopenmolpaywindow://";
         private const String mpcloseallwindows = "mpcloseallwindows://";
         private const String mptransactionresults = "mptransactionresults://";
+        private const String mprunscriptonpopup = "mprunscriptonpopup://";
 #endif
 
         private const String molpayresulturl = "https://www.onlinepayment.com.my/MOLPay/result.php";
@@ -50,6 +52,7 @@ namespace MOLPayXDK
 
         private Dictionary<String, object> paymentDetails;
         private String transactionResult;
+        private String finishLoadUrl;
         private Boolean isClosingReceipt = false;
         private Boolean hijackWindowOpen = false;
         private UniWebView mpMainUI, mpMOLPayUI, mpBankUI;
@@ -190,6 +193,23 @@ namespace MOLPayXDK
                     }
                 }
             }
+            else if (loadingUrl != null && loadingUrl.StartsWith(mprunscriptonpopup))
+            {
+                String base64String = loadingUrl.Replace(mprunscriptonpopup, "");
+
+#if UNITY_IOS
+                base64String = base64String.Replace ("-", "+");
+                base64String = base64String.Replace ("_", "=");
+#endif
+
+                byte[] data = Convert.FromBase64String(base64String);
+                String decodedString = Encoding.UTF8.GetString(data);
+
+                if (decodedString.Length > 0)
+                {
+                    mpMOLPayUI.EvaluatingJavaScript(decodedString);
+                }
+            }
         }
 
         private void MPMainUIOnLoadComplete(UniWebView webView, bool success, string errorMessage)
@@ -214,6 +234,7 @@ namespace MOLPayXDK
             {
                 hijackWindowOpen = true;
             }
+            finishLoadUrl = loadingUrl;
         }
 
         private void MPMOLPayUIOnLoadComplete(UniWebView webView, bool success, string errorMessage)
@@ -226,8 +247,8 @@ namespace MOLPayXDK
                                                     "return window;" +
                                                 "};" +
                                             "} (window.open); ");
-                webView.OnLoadComplete -= MPMOLPayUIOnLoadComplete;
             }
+            NativeWebRequestUrlUpdatesOnFinishLoad(mpMainUI, finishLoadUrl);
         }
 
         private UniWebView CreateWebView()
@@ -260,6 +281,14 @@ namespace MOLPayXDK
             data.Add("requestPath", url);
             
             webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + DictionaryToJsonString(data) + ")");
+        }
+
+        private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, String url)
+        {
+            Dictionary<String, object> data = new Dictionary<String, object>();
+            data.Add("requestPath", url);
+
+            webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + DictionaryToJsonString(data) + ")");
         }
 
         private String DictionaryToJsonString(Dictionary<String, object> dict)
