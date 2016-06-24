@@ -30,6 +30,7 @@ namespace MOLPayXDK
         public const String mp_is_escrow = "mp_is_escrow";
         public const String mp_bin_lock = "mp_bin_lock";
         public const String mp_bin_lock_err_msg = "mp_bin_lock_err_msg";
+        public const String mp_custom_css_url = "mp_custom_css_url";
 
 #if UNITY_IOS
         private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
