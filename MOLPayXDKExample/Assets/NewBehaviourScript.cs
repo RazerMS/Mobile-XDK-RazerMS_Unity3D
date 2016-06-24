@@ -38,9 +38,9 @@ public class NewBehaviourScript : MonoBehaviour
         //paymentDetails.Add(MOLPay.mp_bin_lock_err_msg, "");
 
 #if UNITY_IOS
-        //paymentDetails.put(MOLPayActivity.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
+        //paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
 #elif UNITY_ANDROID
-        //paymentDetails.put(MOLPayActivity.mp_custom_css_url, "file:///android_asset/custom.css");
+        //paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
 #endif
 
         molpay.StartMolpay(paymentDetails, MolpayCallback);
