@@ -93,10 +93,6 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     * Notes: The close event will also return a final result.
 
-## Transaction status request service (No UI & auto close) (optional)
-
-    molpay.TransactionRequest(paymentDetails, MolpayCallback);
-
 ## Support
 
 Submit issue to this repository or email to our support@molpay.com
