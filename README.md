@@ -26,11 +26,13 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 2 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into Assets\StreamingAssets\ folder of your Unity project
 
-    Step 3 - Purchase UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project
+    Step 3 - Copy and paste custom.css into Assets\StreamingAssets\ folder of your Unity project
 
-    Step 4 - Open JSON Object in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/710 by clicking the "Open in Unity" button. After that import it into your unity project
+    Step 4 - Purchase UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project
 
-    Step 5 - Add the result callback function
+    Step 5 - Open JSON Object in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/710 by clicking the "Open in Unity" button. After that import it into your unity project
+
+    Step 6 - Add the result callback function
     public void MolpayCallback (string transactionResult)
     {
         Debug.Log("MolpayCallback transactionResult = " + transactionResult);
@@ -82,6 +84,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     // For transaction request use only, do not use this on payment process
     paymentDetails.Add(MOLPay.mp_transaction_id, ""); // Optional, provide a valid cash channel transaction id here will display a payment instruction screen.
     paymentDetails.Add(MOLPay.mp_request_type, ""); // Optional, set 'Status' when performing a transactionRequest
+
+    // Optional for customizing MOLPay UI
+    paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
 
 ## Start the payment module UI
 
