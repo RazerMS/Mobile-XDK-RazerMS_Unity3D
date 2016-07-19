@@ -29,13 +29,13 @@ public class NewBehaviourScript : MonoBehaviour
         paymentDetails.Add(MOLPay.mp_bill_mobile, "");
         paymentDetails.Add(MOLPay.mp_channel_editing, false);
         paymentDetails.Add(MOLPay.mp_editing_enabled, false);
-        paymentDetails.Add(MOLPay.mp_is_escrow, "");
-        paymentDetails.Add(MOLPay.mp_transaction_id, "");
-        paymentDetails.Add(MOLPay.mp_request_type, "");
-
+        //paymentDetails.Add(MOLPay.mp_is_escrow, "");
+        //paymentDetails.Add(MOLPay.mp_transaction_id, "");
+        //paymentDetails.Add(MOLPay.mp_request_type, "");
         //String[] binlock = new String[] { "", "" };
         //paymentDetails.Add(MOLPay.mp_bin_lock, binlock);
         //paymentDetails.Add(MOLPay.mp_bin_lock_err_msg, "");
+        //paymentDetails.Add(MOLPay.mp_preferred_token, "");
 
 #if UNITY_IOS
         //paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
