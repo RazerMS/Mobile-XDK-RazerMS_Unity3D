@@ -31,6 +31,7 @@ namespace MOLPayXDK
         public const String mp_bin_lock = "mp_bin_lock";
         public const String mp_bin_lock_err_msg = "mp_bin_lock_err_msg";
         public const String mp_custom_css_url = "mp_custom_css_url";
+        public const String mp_preferred_token = "mp_preferred_token";
 
 #if UNITY_IOS
         private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
