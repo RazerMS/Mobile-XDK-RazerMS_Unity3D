@@ -88,6 +88,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     // Optional for customizing MOLPay UI
     paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
 
+    // Optional, set the token id to nominate a preferred token as the default selection
+    paymentDetails.Add(MOLPay.mp_preferred_token, "");
+
 ## Start the payment module UI
 
     molpay.StartMolpay(paymentDetails, MolpayCallback);
