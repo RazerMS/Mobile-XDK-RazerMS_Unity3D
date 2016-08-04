@@ -93,6 +93,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     // Optional, credit card transaction type, set "AUTH" to authorize the transaction
     paymentDetails.Add(MOLPay.mp_tcctype, "");
+
+    // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf
+    paymentDetails.Add(MOLPay.mp_is_recurring, false);
     
 ## Start the payment module UI
 
