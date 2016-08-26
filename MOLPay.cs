@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using MiniJSON;
 
 namespace MOLPayXDK
 {
@@ -180,9 +181,9 @@ namespace MOLPayXDK
 
                     try
                     {
-                        JSONObject jsonResult = new JSONObject(transactionResult);
+                        var jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
 
-                        if (jsonResult["mp_request_type"] == null || jsonResult["mp_request_type"].str != "Receipt")
+                        if (jsonResult["mp_request_type"] == null || (String)jsonResult["mp_request_type"] != "Receipt")
                         {
                             Finish();
                         }
@@ -223,7 +224,7 @@ namespace MOLPayXDK
                 paymentDetails.Add(module_id, "molpay-mobile-xdk-unity3d");
                 paymentDetails.Add(wrapper_version, "0");
                 paymentDetails.Add(webview_url_prefix, uniwebview);
-                webView.EvaluatingJavaScript("updateSdkData(" + DictionaryToJsonString(paymentDetails) + ")");
+                webView.EvaluatingJavaScript("updateSdkData(" + Json.Serialize(paymentDetails) + ")");
                 webView.OnLoadComplete -= MPMainUIOnLoadComplete;
             }
         }
@@ -284,7 +285,7 @@ namespace MOLPayXDK
             Dictionary<String, object> data = new Dictionary<String, object>();
             data.Add("requestPath", url);
             
-            webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + DictionaryToJsonString(data) + ")");
+            webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
         }
 
         private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, String url)
@@ -292,14 +293,7 @@ namespace MOLPayXDK
             Dictionary<String, object> data = new Dictionary<String, object>();
             data.Add("requestPath", url);
 
-            webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + DictionaryToJsonString(data) + ")");
-        }
-
-        private String DictionaryToJsonString(Dictionary<String, object> dict)
-        {
-            var entries = dict.Select(d => String.Format("\"{0}\": \"{1}\"", d.Key, d.Value));
-            String[] array = entries.Cast<String>().ToArray();
-            return "{" + String.Join(",", array) + "}";
+            webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
         }
 
         private void Finish ()

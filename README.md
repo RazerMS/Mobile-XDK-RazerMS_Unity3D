@@ -14,8 +14,6 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     - UniWebView 2 ++
 
-    - Unity JSON Object
-
     - Minimum Android target version: Android 4.4
 
     - Minimum iOS target version: 7.0
@@ -28,13 +26,13 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 1 - Copy and paste MOLPay.cs into the Assets folder of your Unity project
 
-    Step 2 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into Assets\StreamingAssets\ folder of your Unity project
+    Step 2 - Copy and paste MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets folder of your Unity project
 
-    Step 3 - Copy and paste custom.css into Assets\StreamingAssets\ folder of your Unity project
+    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into Assets\StreamingAssets\ folder of your Unity project
 
-    Step 4 - Purchase UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project
+    Step 4 - Copy and paste custom.css into Assets\StreamingAssets\ folder of your Unity project
 
-    Step 5 - Open JSON Object in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/710 by clicking the "Open in Unity" button. After that import it into your unity project
+    Step 5 - Purchase UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project
 
     Step 6 - Add the result callback function
     public void MolpayCallback (string transactionResult)
