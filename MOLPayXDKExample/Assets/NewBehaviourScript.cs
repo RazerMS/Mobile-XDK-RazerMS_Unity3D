@@ -18,10 +18,10 @@ public class NewBehaviourScript : MonoBehaviour
         paymentDetails.Add(MOLPay.mp_password, "");
         paymentDetails.Add(MOLPay.mp_merchant_ID, "");
         paymentDetails.Add(MOLPay.mp_app_name, "");
+        paymentDetails.Add(MOLPay.mp_verification_key, "");
         paymentDetails.Add(MOLPay.mp_order_ID, "");
         paymentDetails.Add(MOLPay.mp_currency, "");
         paymentDetails.Add(MOLPay.mp_country, "");
-        paymentDetails.Add(MOLPay.mp_verification_key, "");
         paymentDetails.Add(MOLPay.mp_channel, "");
         paymentDetails.Add(MOLPay.mp_bill_description, "");
         paymentDetails.Add(MOLPay.mp_bill_name, "");

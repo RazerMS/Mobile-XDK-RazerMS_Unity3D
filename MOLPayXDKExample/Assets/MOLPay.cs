@@ -79,6 +79,7 @@ namespace MOLPayXDK
         {
             this.paymentDetails = paymentDetails;
             this.callback = callback;
+            transactionResult = string.Empty;
             mpMainUI = CreateWebView();
 
             mpMainUI.url = webViewUrl;
@@ -120,9 +121,14 @@ namespace MOLPayXDK
 
         private void MPMainUIOnReceivedMessage(UniWebView webView, UniWebViewMessage message)
         {
-            String loadingUrl = message.rawMessage.Replace(uniwebview, "");
+            String loadingUrl = string.Empty;
+            if (message.rawMessage != null && message.rawMessage != string.Empty)
+            {
+                Debug.Log("UniWebViewMessage message: " + message.rawMessage);
+                loadingUrl = message.rawMessage.Replace(uniwebview, "");
+            }
 
-            if (loadingUrl != null && loadingUrl.StartsWith(mpopenmolpaywindow))
+            if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpopenmolpaywindow))
             {
                 mpMainUI.Stop();
                 String base64String = loadingUrl.Replace(mpopenmolpaywindow, "");
@@ -144,7 +150,7 @@ namespace MOLPayXDK
                     mpMOLPayUI.OnLoadComplete += MPMOLPayUIOnLoadComplete;
                 }
             }
-            else if (loadingUrl != null && loadingUrl.StartsWith(mpcloseallwindows))
+            else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpcloseallwindows))
             {
                 if (mpBankUI != null)
                 {
@@ -162,7 +168,7 @@ namespace MOLPayXDK
                 mpMOLPayUI.CleanCookie();
                 mpMOLPayUI = null;
             }
-            else if (loadingUrl != null && loadingUrl.StartsWith(mptransactionresults))
+            else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mptransactionresults))
             {
                 String base64String = loadingUrl.Replace(mptransactionresults, "");
 
@@ -177,13 +183,14 @@ namespace MOLPayXDK
                 if (decodedString.Length > 0)
                 {
                     transactionResult = decodedString;
-                    callback(transactionResult);
 
                     try
                     {
-                        var jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
+                        Dictionary<String, object> jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
 
-                        if (jsonResult["mp_request_type"] == null || (String)jsonResult["mp_request_type"] != "Receipt")
+                        object requestType;
+                        jsonResult.TryGetValue("mp_request_type", out requestType);
+                        if (!jsonResult.ContainsKey("mp_request_type") || (String)requestType != "Receipt" || jsonResult.ContainsKey("error_code"))
                         {
                             Finish();
                         }
@@ -198,7 +205,7 @@ namespace MOLPayXDK
                     }
                 }
             }
-            else if (loadingUrl != null && loadingUrl.StartsWith(mprunscriptonpopup))
+            else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mprunscriptonpopup))
             {
                 String base64String = loadingUrl.Replace(mprunscriptonpopup, "");
 
@@ -304,6 +311,7 @@ namespace MOLPayXDK
             mpMainUI.CleanCache();
             mpMainUI.CleanCookie();
             mpMainUI = null;
+            callback(transactionResult);
         }
     }
 }
