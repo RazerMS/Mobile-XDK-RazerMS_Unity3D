@@ -24,17 +24,17 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
 ## Installation
 
-    Step 1 - Copy and paste MOLPay.cs into the Assets folder of your Unity project
+    Step 1 - Copy and paste MOLPay.cs into the Assets\ folder of your Unity project.
 
-    Step 2 - Copy and paste MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets folder of your Unity project
+    Step 2 - Copy and paste third party library MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets\ folder of your Unity project.
 
-    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into Assets\StreamingAssets\ folder of your Unity project
+    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into the Assets\StreamingAssets\ folder of your Unity project.
 
-    Step 4 - Copy and paste custom.css into Assets\StreamingAssets\ folder of your Unity project
+    Step 4 - Copy and paste custom.css into the Assets\StreamingAssets\ folder of your Unity project.
 
-    Step 5 - Purchase UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project
+    Step 5 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
 
-    Step 6 - Add the result callback function
+    Step 6 - Add the result callback function.
     public void MolpayCallback (string transactionResult)
     {
         Debug.Log("MolpayCallback transactionResult = " + transactionResult);
@@ -67,11 +67,11 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     Parameter and meaning:
     
     "Communication Error" - Error starting a payment process due to several possible reasons, please contact MOLPay support should the error persists.
-    1) Internet not available
-    2) API credentials (username, password, merchant id, verify key)
+    1) Internet not available.
+    2) API credentials (username, password, merchant id, verify key).
     3) MOLPay server offline.
 
-## Using MOLPayXDK namespace
+## Import namespace
 
     using MOLPayXDK;
 
