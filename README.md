@@ -32,9 +32,15 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 4 - Copy and paste custom.css into the Assets\StreamingAssets\ folder of your Unity project.
 
-    Step 5 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
+    Step 5 - Copy and paste PhotoManager.h and PhotoManager.m into the Assets\Plugins\iOS\ folder of your Unity project. (Create one if the directory does not exist)
 
-    Step 6 - Add the result callback function.
+    Step 6 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "Make a copy of 7-11 payment instruction to Photos".
+
+    Step 7 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
+
+    Step 8 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
+
+    Step 9 - Add the result callback function.
     public void MolpayCallback (string transactionResult)
     {
         Debug.Log("MolpayCallback transactionResult = " + transactionResult);
@@ -119,7 +125,11 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     paymentDetails.Add(MOLPay.mp_request_type, ""); // Optional, set 'Status' when performing a transactionRequest
 
     // Optional for customizing MOLPay UI
-    paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
+    #if UNITY_IOS
+        paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
+    #elif UNITY_ANDROID
+        paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
+    #endif
 
     // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only
     paymentDetails.Add(MOLPay.mp_preferred_token, "");
@@ -129,6 +139,13 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf
     paymentDetails.Add(MOLPay.mp_is_recurring, false);
+
+    // Optional for sandboxed development environment, set boolean value to enable
+    paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
+
+    // Optional for channels restriction 
+    String[] allowedChannels = new String[] { "credit", "credit3", null };
+    paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
     
 ## Start the payment module UI
 
