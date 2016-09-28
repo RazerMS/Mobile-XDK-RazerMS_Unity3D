@@ -34,7 +34,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 5 - Copy and paste PhotoManager.h and PhotoManager.m into the Assets\Plugins\iOS\ folder of your Unity project. (Create one if the directory does not exist)
 
-    Step 6 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "Make a copy of 7-11 payment instruction to Photos".
+    Step 6 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "MOLPay XDK Images".
 
     Step 7 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
 
