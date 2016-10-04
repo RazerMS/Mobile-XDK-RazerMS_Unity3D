@@ -40,6 +40,7 @@ namespace MOLPayXDK
 		public const String mp_is_recurring = "mp_is_recurring";
 		public const String mp_sandbox_mode = "mp_sandbox_mode";
 		public const String mp_allowed_channels = "mp_allowed_channels";
+        public const String mp_express_mode = "mp_express_mode";
 
 #if UNITY_IOS
 		private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
@@ -193,7 +194,7 @@ namespace MOLPayXDK
 							isClosingReceipt = true;
 						}
 					}
-					catch (Exception ex)
+					catch (Exception)
 					{
 						Finish();
 					}
@@ -248,7 +249,7 @@ namespace MOLPayXDK
 				using (AndroidJavaClass jcEnvironment = new AndroidJavaClass("android.os.Environment"))
 				using (AndroidJavaObject joExDir = jcEnvironment.CallStatic<AndroidJavaObject>("getExternalStorageDirectory"))
 				{
-				jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { imageLocation }, null, null);
+				    jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { imageLocation }, null, null);
 				}
 #endif
 
@@ -334,19 +335,33 @@ namespace MOLPayXDK
 
 		private void NativeWebRequestUrlUpdates(UniWebView webView, String url)
 		{
-			Dictionary<String, object> data = new Dictionary<String, object>();
-			data.Add("requestPath", url);
+            try
+            {
+                Dictionary<String, object> data = new Dictionary<String, object>();
+                data.Add("requestPath", url);
 
-			webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
+                webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
+            }
+            catch (Exception)
+            {
+
+            }
 		}
 
 		private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, String url)
 		{
-			Dictionary<String, object> data = new Dictionary<String, object>();
-			data.Add("requestPath", url);
+            try
+            {
+			    Dictionary<String, object> data = new Dictionary<String, object>();
+			    data.Add("requestPath", url);
 
-			webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
-		}
+			    webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
+            }
+            catch (Exception)
+            {
+
+            }
+        }
 
 		private void Finish ()
 		{
