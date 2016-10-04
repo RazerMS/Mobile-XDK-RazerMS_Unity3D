@@ -146,7 +146,10 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     // Optional for channels restriction 
     String[] allowedChannels = new String[] { "credit", "credit3", null };
     paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
-    
+
+    // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
+    paymentDetails.Add(MOLPay.mp_express_mode, false);
+
 ## Start the payment module UI
 
     molpay.StartMolpay(paymentDetails, MolpayCallback);

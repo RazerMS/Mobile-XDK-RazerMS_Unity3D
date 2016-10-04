@@ -46,6 +46,7 @@ public class NewBehaviourScript : MonoBehaviour
         paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
         //String[] allowedChannels = new String[] { "credit", "credit3", null };
         //paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
+        paymentDetails.Add(MOLPay.mp_express_mode, false);
 
         molpay.StartMolpay(paymentDetails, MolpayCallback);
     }
