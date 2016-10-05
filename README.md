@@ -10,7 +10,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
 ## Recommended configurations
 
-    - Unity Version: 5.3.4f1 ++
+    - Unity Version: 5.4.1f1 ++
 
     - UniWebView 2 ++
 
