@@ -42,11 +42,11 @@ public class NewBehaviourScript : MonoBehaviour
 #endif
         //paymentDetails.Add(MOLPay.mp_preferred_token, "");
         //paymentDetails.Add(MOLPay.mp_tcctype, "");
-        paymentDetails.Add(MOLPay.mp_is_recurring, false);
-        paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
+        //paymentDetails.Add(MOLPay.mp_is_recurring, false);
+        //paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
         //String[] allowedChannels = new String[] { "credit", "credit3", null };
         //paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
-        paymentDetails.Add(MOLPay.mp_express_mode, false);
+        //paymentDetails.Add(MOLPay.mp_express_mode, false);
 
         molpay.StartMolpay(paymentDetails, MolpayCallback);
     }
