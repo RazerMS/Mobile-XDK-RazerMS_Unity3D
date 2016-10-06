@@ -124,7 +124,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     paymentDetails.Add(MOLPay.mp_transaction_id, ""); // Optional, provide a valid cash channel transaction id here will display a payment instruction screen.
     paymentDetails.Add(MOLPay.mp_request_type, ""); // Optional, set 'Status' when performing a transactionRequest
 
-    // Optional for customizing MOLPay UI
+    // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file is provided at Example project source for reference and implementation.
     #if UNITY_IOS
         paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
     #elif UNITY_ANDROID
