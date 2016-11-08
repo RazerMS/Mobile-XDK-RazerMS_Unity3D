@@ -172,6 +172,14 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     
     4) After the user done the paying at the 7-Eleven counter, they can close and exit MOLPay XDK by clicking the “Close” button again.
 
+## XDK built-in checksum validator caveats 
+
+    All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
+
+## Private Secret Key checksum validation formula
+
+    chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
+
 ## Support
 
 Submit issue to this repository or email to our support@molpay.com
