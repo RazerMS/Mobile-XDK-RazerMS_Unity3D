@@ -40,7 +40,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 8 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
 
-    Step 9 - Add the result callback function.
+    Step 9 - In Unity Editor, navigate to Assets\Plugins\Android\, check the folders like common_lib, google-play-services_lib, native_plugins_lib, support_lib, voxelbusters_utility_lib, look in Inspector (e.g. common_lib Import Settings), turn off checkbox "Any platform" and turn on checkbox "Android" instead.
+
+    Step 10 - Add the result callback function.
     public void MolpayCallback (string transactionResult)
     {
         Debug.Log("MolpayCallback transactionResult = " + transactionResult);
