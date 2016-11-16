@@ -13,20 +13,20 @@ public class NewBehaviourScript : MonoBehaviour
     void Start()
     {
         Dictionary<String, object> paymentDetails = new Dictionary<String, object>();
-        paymentDetails.Add(MOLPay.mp_amount, "");
-        paymentDetails.Add(MOLPay.mp_username, "");
-        paymentDetails.Add(MOLPay.mp_password, "");
-        paymentDetails.Add(MOLPay.mp_merchant_ID, "");
-        paymentDetails.Add(MOLPay.mp_app_name, "");
-        paymentDetails.Add(MOLPay.mp_verification_key, "");
-        paymentDetails.Add(MOLPay.mp_order_ID, "");
-        paymentDetails.Add(MOLPay.mp_currency, "MYR");
-        paymentDetails.Add(MOLPay.mp_country, "MY");
-        paymentDetails.Add(MOLPay.mp_channel, "");
-        paymentDetails.Add(MOLPay.mp_bill_description, "");
-        paymentDetails.Add(MOLPay.mp_bill_name, "");
-        paymentDetails.Add(MOLPay.mp_bill_email, "");
-        paymentDetails.Add(MOLPay.mp_bill_mobile, "");
+		paymentDetails.Add(MOLPay.mp_amount, "");
+		paymentDetails.Add(MOLPay.mp_username, "");
+		paymentDetails.Add(MOLPay.mp_password, "");
+		paymentDetails.Add(MOLPay.mp_merchant_ID, "");
+		paymentDetails.Add(MOLPay.mp_app_name, "");
+		paymentDetails.Add(MOLPay.mp_verification_key, "");
+		paymentDetails.Add(MOLPay.mp_order_ID, "");
+		paymentDetails.Add(MOLPay.mp_currency, "MYR");
+		paymentDetails.Add(MOLPay.mp_country, "MY");
+		paymentDetails.Add(MOLPay.mp_channel, "");
+		paymentDetails.Add(MOLPay.mp_bill_description, "");
+		paymentDetails.Add(MOLPay.mp_bill_name, "");
+		paymentDetails.Add(MOLPay.mp_bill_email, "");
+		paymentDetails.Add(MOLPay.mp_bill_mobile, "");
         paymentDetails.Add(MOLPay.mp_channel_editing, false);
         paymentDetails.Add(MOLPay.mp_editing_enabled, false);
         //paymentDetails.Add(MOLPay.mp_is_escrow, "");

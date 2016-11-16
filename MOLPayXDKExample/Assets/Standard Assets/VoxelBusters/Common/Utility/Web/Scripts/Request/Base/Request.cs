@@ -75,7 +75,7 @@ namespace VoxelBusters.Utility
 					
 					// Hide it in hierarchy and add a mono component
 					_surrogateGO.hideFlags	= HideFlags.HideInHierarchy;
-					surrogateMonobehaviour	= _surrogateGO.AddComponent<MonoBehaviour>();
+					surrogateMonobehaviour	= _surrogateGO.AddComponent<SurrogateMonoBehaviour>();
 				}
 
 				// Start coroutine using surrogate object

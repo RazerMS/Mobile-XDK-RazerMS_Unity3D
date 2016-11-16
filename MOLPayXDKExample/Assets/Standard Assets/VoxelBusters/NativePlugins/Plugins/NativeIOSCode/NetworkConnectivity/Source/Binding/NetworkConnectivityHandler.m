@@ -8,15 +8,21 @@
 
 #import "NetworkConnectivityHandler.h"
 
+@interface NetworkConnectivityHandler ()
+
+@property (nonatomic, retain)   Reachability	*hostReachability;
+@property (nonatomic, assign)   bool			isHostReachable;
+
+@end
+
 @implementation NetworkConnectivityHandler
 
 #define kNetworkChanged		"ConnectivityChanged"
 
-@synthesize isHostReachable;
-@synthesize isWifiReachable;
-@synthesize isConnected;
 @synthesize hostReachability;
-@synthesize wifiReachability;
+
+@synthesize isConnected;
+@synthesize isHostReachable;
 
 #pragma mark - init and dealloc
 
@@ -26,21 +32,15 @@
     
     if (self)
     {
-        // Default flag values
-        self.isHostReachable    = NO;
-        self.isWifiReachable 	= NO;
-        self.isConnected		= NO;
-        
-        // Register for notification
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(reachabilityChanged:)
-                                                     name:kReachabilityChangedNotification
-                                                   object:nil];
+		// Default flag values
+		self.isConnected			= NO;
+        self.isHostReachable    	= NO;
 		
-		// Check if wifi is reachable
-        self.wifiReachability		= [Reachability reachabilityForLocalWiFi];
-        [self.wifiReachability startNotifier];
-        [self updateInterfaceWithReachability:self.wifiReachability];
+		// Register for notification
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(reachabilityChanged:)
+													 name:kReachabilityChangedNotification
+												   object:nil];
     }
     
     return self;
@@ -55,15 +55,15 @@
                                                   object:nil];
 	
     // Release
-    self.hostReachability   = NULL;
-    self.wifiReachability	= NULL;
-    
+	[self.hostReachability stopNotifier];
+	self.hostReachability		= NULL;
+	
     [super dealloc];
 }
 
 #pragma mark - Methods
 
-- (void)setNewIPAddress:(NSString *)newIPAddress
+- (void)setHostAddress:(NSString *)hostAddress
 {
 	// Old reachablity handler will be released
 	if (self.hostReachability != NULL)
@@ -72,18 +72,15 @@
 		self.hostReachability	= NULL;
 	}
 	
-	// Create socket info for new IP address
-	struct sockaddr_in hostAddress;
-	bzero(&hostAddress, sizeof(hostAddress));
-	hostAddress.sin_len 		= sizeof(hostAddress);
-	hostAddress.sin_family		= AF_INET;
-	hostAddress.sin_port 		= htons(24);
-	hostAddress.sin_addr.s_addr = inet_addr([newIPAddress UTF8String]);
+	struct sockaddr_in6 addr;
+	memset(&addr, 0, sizeof(struct sockaddr_in6));
+	addr.sin6_len = sizeof(struct sockaddr_in6);
+	addr.sin6_family = AF_INET6;
+	inet_pton(AF_INET6, [hostAddress UTF8String], &addr.sin6_addr);
 	
-	// Initialise host reachablity
-	self.hostReachability   	= [Reachability reachabilityWithAddress:&hostAddress];
+	self.hostReachability   	= [Reachability reachabilityWithAddress:(const struct sockaddr *)&addr];
 	[self.hostReachability startNotifier];
-	[self updateInterfaceWithReachability:self.hostReachability];
+	[self updateReachablityStatus:self.hostReachability];
 }
 
 
@@ -95,24 +92,23 @@
     
     if ([curReach isKindOfClass:[Reachability class]])
     {
-        [self updateInterfaceWithReachability: curReach];
+        [self updateReachablityStatus:curReach];
     }
 }
 
-- (void)updateInterfaceWithReachability:(Reachability *)curReach
+- (void)updateReachablityStatus:(Reachability *)reachability
 {
-    if (curReach == self.hostReachability)
+	if (reachability == self.hostReachability)
 	{
-		self.isHostReachable    = [self checkIfReachable:curReach];
+		BOOL connectionRequired		= [reachability connectionRequired];
+		BOOL reachable				= [self checkIfReachable:reachability];
+		self.isHostReachable		= reachable && !connectionRequired;
 	}
-	else if (curReach == self.wifiReachability)
-	{
-		self.isWifiReachable 	= [self checkIfReachable:curReach];
-	}
-    
-    // Check if reachable or not
-    bool newConnectivityStatus	= self.isHostReachable || self.isWifiReachable;
-    
+	
+	// Check new status
+    BOOL newConnectivityStatus		= self.isHostReachable;
+	
+	// Send message to Unity
     if (self.isConnected)
     {
         if (!newConnectivityStatus)
@@ -130,15 +126,15 @@
         }
     }
 	
-	// Update flag
-	self.isConnected	= newConnectivityStatus;
+	// Cache the new connectivity status
+	self.isConnected		= newConnectivityStatus;
 }
 
-- (bool)checkIfReachable:(Reachability *)curReach
+- (bool)checkIfReachable:(Reachability *)reachability
 {
-    NetworkStatus netStatus = [curReach currentReachabilityStatus];
+    NetworkStatus status = [reachability currentReachabilityStatus];
     
-	return ((netStatus != NotReachable)? true : false);
+	return (status != NotReachable);
 }
 
 @end

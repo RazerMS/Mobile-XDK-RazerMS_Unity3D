@@ -21,7 +21,7 @@ namespace VoxelBusters.Utility
 
 		#region Properties
 
-		public bool			AutoFixOrientation 
+		public bool AutoFixOrientation 
 		{ 
 			get; 
 			set; 
@@ -33,7 +33,7 @@ namespace VoxelBusters.Utility
 			set;
 		}
 
-		public Completion	OnCompletion 
+		public Completion OnCompletion 
 		{ 
 			get; 
 			set; 

@@ -20,8 +20,8 @@ For further information, check the Documentation.pdf shipped with this package o
  
 Feel free to shoot a mail for suggestions/improvements/issues.
 
-Product Page	: http://voxelbusters.github.io/Cross-Platform-Native-Plugins-for-Unity/
-Tutorials		: blogs.voxelbusters.com/products/cross-platform-native-plugins/table-of-contents
-Email ID 		: support@voxelbusters.com
+Product Page	: http://voxelbusters.github.io/Cross-Platform-Native-Plugins-for-Unity
+Tutorials		: https://tutorials.cpnp.voxelbusters.com
+Forum 			: http://www.voxelbusters.com/products/native-plugins/forum/index.php
 Twitter  		: @voxelbusters
 

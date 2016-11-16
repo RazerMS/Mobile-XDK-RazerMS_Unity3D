@@ -29,7 +29,7 @@ namespace VoxelBusters.NativePlugins
 			if (_version.CompareTo("7.0") >= 0)
 				_appstoreURL	= string.Format("itms-apps://itunes.apple.com/app/id{0}", _applicationID);
 			else
-				_appstoreURL	= string.Format("itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id={0]", _applicationID);
+				_appstoreURL	= string.Format("itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id={0}", _applicationID);
 			
 			// Open link
 			Application.OpenURL(_appstoreURL);

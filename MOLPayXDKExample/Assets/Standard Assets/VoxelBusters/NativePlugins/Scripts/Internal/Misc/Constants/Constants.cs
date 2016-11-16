@@ -85,5 +85,11 @@ namespace VoxelBusters.NativePlugins.Internal
 		public const string kWebviewJARName						= "feature.webview";
 		
 		#endregion
+
+		#region Plugin Editor Flag Keys
+
+		public const string	kPrefsKeyResolveAndroidDependencies	= "np-resolve-android-dependencies";
+	
+		#endregion
 	}
 }

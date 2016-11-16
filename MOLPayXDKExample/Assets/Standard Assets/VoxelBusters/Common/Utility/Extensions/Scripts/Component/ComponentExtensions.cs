@@ -8,7 +8,7 @@ namespace VoxelBusters.Utility
 	{	
 		#region Methods
 
-		public static T AddComponentIfDoesntExist <T> (this GameObject _gameObject) where T : Component
+		public static T AddComponentIfNotFound <T> (this GameObject _gameObject) where T : Component
 		{
 			T 	_component	= _gameObject.GetComponent<T>();
 

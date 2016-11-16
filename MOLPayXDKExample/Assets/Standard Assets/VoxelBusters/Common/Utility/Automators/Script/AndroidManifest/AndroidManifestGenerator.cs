@@ -66,7 +66,7 @@ namespace VoxelBusters.Utility
 		protected virtual void WritePermissions (XmlWriter _xmlWriter)
 		{}
 		
-		protected void WriteActivity (XmlWriter _xmlWriter, string _name, string _theme = null, string _orientation = null, string _configChanges = null, string _comment = null)
+		protected void WriteActivity (XmlWriter _xmlWriter, string _name, string _theme = null, string _orientation = null, string _configChanges = null, string _exported = null, string _comment = null)
 		{
 			if (_comment != null)
 				_xmlWriter.WriteComment(_comment);
@@ -83,11 +83,15 @@ namespace VoxelBusters.Utility
 				
 				if (_configChanges != null)
 					_xmlWriter.WriteAttributeString("android:configChanges", 		_configChanges);
+
+				if (_exported != null)
+					_xmlWriter.WriteAttributeString("android:exported", 			_exported);
+
 			}
 			_xmlWriter.WriteEndElement();
 		}
 		
-		protected void WriteAction (XmlWriter _xmlWriter, string _name, string _comment = null)
+		protected void WriteAction (XmlWriter _xmlWriter, string _name, string _permission = null, string _comment = null)
 		{
 			if (_comment != null)
 				_xmlWriter.WriteComment(_comment);
@@ -95,6 +99,9 @@ namespace VoxelBusters.Utility
 			_xmlWriter.WriteStartElement("action");
 			{
 				_xmlWriter.WriteAttributeString("android:name", 	_name);
+				
+				if (_permission != null)
+					_xmlWriter.WriteAttributeString("android:permission", _permission);
 			}
 			_xmlWriter.WriteEndElement();
 		}

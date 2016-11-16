@@ -147,7 +147,7 @@ namespace VoxelBusters.NativePlugins
 		{
 			get
 			{
-				return !ImageAsyncDownloadInProgress || !m_attachmentDownloadInProgress;
+				return !(ImageAsyncDownloadInProgress || m_attachmentDownloadInProgress);
 			}
 		}
 

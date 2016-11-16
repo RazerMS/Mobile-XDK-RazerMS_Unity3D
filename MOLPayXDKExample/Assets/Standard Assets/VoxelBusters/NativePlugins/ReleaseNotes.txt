@@ -1,3 +1,45 @@
+1.4
+Important : UPGRADE INSTRUCTIONS : "https://tutorials.cpnp.voxelbusters.com/Upgrade%20Guide/upgrade_guide.html"
+
+Badge Support for Notifications on Android
+Upgraded Twitter SDK to include bit code files
+Finished Bitcode Support
+Check changed features for Amazon
+Fixed links on Gitbook
+Added Google Jar Resolver Support
+Remove extra permissions for Android Game Services
+Include all bit code files
+Compatibility with 5.4
+Silent Login for Google Play Services (http://android-developers.blogspot.in/2016/01/play-games-permissions-are-changing-in.html)
+IPV6 Support
+Option for Sending an empty Alert notification - Skip notification if alert is empty
+Adding Developer Payload on Android for extra security
+Add needs big text style
+Notification - Making multiple lines
+Get Specific sign in error information/Opt if you want error dialogs from NPSettings
+
+
+
+1.3.1.1
+Important : UPGRADE INSTRUCTIONS : "http://tiny.cc/cpnp_upgrade_1_3"
+
+[Android] Hot fix for Plugin resources copy issue on Android.
+[Android] Copy of Plugin Resources  refreshes instantly now.
+Updated Forum link in NPSettings.
+
+
+
+1.3.1
+Important : UPGRADE INSTRUCTIONS : "http://tiny.cc/cpnp_upgrade_1_3"
+
+Added NPBinding.GameServices.GetNoOfStepsForCompletingAchievement to get max steps for completing an achievement.
+MaxPoints now deprecated. You need to set in NPSettings how many points required to complete an achievement.
+Changed ReportProgress to take Percentage in double type instead of integer.
+PointsScored property deprecated. Instead use PercentageCompleted.
+Address Book contact display issue resolved.
+Game Services editor support issue fixes.
+Webplayer compilation issue  fixes.
+
 1.3
 Important : UPGRADE INSTRUCTIONS : "http://tiny.cc/cpnp_upgrade_1_3"
 

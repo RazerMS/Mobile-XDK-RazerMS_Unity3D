@@ -72,7 +72,7 @@ namespace VoxelBusters.NativePlugins
 				string	_toRecipientsJSONList		= (_recipients == null) ? null : _recipients.ToJSON();
 
 				if (_attachmentByteArray != null)
-					_attachmentByteArrayLength	= _attachmentByteArray.Length;
+					_attachmentByteArrayLength		= _attachmentByteArray.Length;
 				
 				sendMail(_subject, 				_body, 	_isHTMLBody,
 				         _toRecipientsJSONList, null, 	null, 

@@ -1,4 +1,5 @@
 using UnityEngine;
+#if UNITY_EDITOR && UNITY_IOS
 using System.Collections;
 using System.IO;
 
@@ -160,3 +161,4 @@ namespace VoxelBusters.ThirdParty.XUPorter
 		}
 	}
 }
+#endif

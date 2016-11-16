@@ -28,7 +28,7 @@ namespace VoxelBusters.Utility
 
 		#region Button Layout
 
-		public static void Buttons (ArrayList _buttonsList, System.Action<string> _callbackOnPress,
+		public static void Buttons (IList _buttonsList, System.Action<string> _callbackOnPress,
 		                            Rect _normalisedBounds)
 		{
 			if (_buttonsList == null)
@@ -63,7 +63,7 @@ namespace VoxelBusters.Utility
 			GUILayout.EndArea();
 		}
 
-		private static void DrawButtonsLayout (ArrayList _buttonsList, System.Action<string> _callbackOnPress,
+		private static void DrawButtonsLayout (IList _buttonsList, System.Action<string> _callbackOnPress,
 		                                       int _startingIndex, int _buttonsPerColumn, params GUILayoutOption[] _layoutOptions)
 		{
 			int _totalButtons	= _buttonsList.Count;

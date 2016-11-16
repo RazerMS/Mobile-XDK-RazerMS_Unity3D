@@ -1,4 +1,8 @@
-﻿#if UNITY_EDITOR
+﻿#if (UNITY_WEBPLAYER || UNITY_WEBGL || NETFX_CORE)
+#define IO_UNSUPPORTED_PLATFORM
+#endif
+
+#if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -28,36 +32,20 @@ namespace VoxelBusters.Utility
 		[MenuItem("Assets/Compress")]
 		private static void Compress ()
 		{
-			string 				_curSelectedFolder		= AssetsUtility.GUIDToAssetAbsolutePath(Selection.assetGUIDs[0]);
-
-			// Generate output file path
-			if (Directory.Exists(_curSelectedFolder))
-			{
-				DirectoryInfo 	_curDirectoryInfo		= new DirectoryInfo(_curSelectedFolder);
-
-				// Set info
-				string 			_compressedFileName		= _curDirectoryInfo.Name + ".gz";
-				string 			_parentDirectoryPath	= _curDirectoryInfo.Parent.FullName;
-
-				// Output file name
-				string 			_outputFileAbsolutePath	= Path.Combine(_parentDirectoryPath, _compressedFileName);
-				
-				// Now compress the file
-				CompressDirectory(_curSelectedFolder, _outputFileAbsolutePath, (string _outputMessage)=>{
-					Debug.Log(_outputMessage);
-				});
-			}
-		}
-
-		[MenuItem("Assets/Compress", true)]
-		private static bool CompressValidation ()
-		{
-			string[] _guids	= Selection.assetGUIDs;
-
-			if (_guids.Length <= 0)
-				return false;
-
-			return Directory.Exists(AssetsUtility.GUIDToAssetAbsolutePath(_guids[0]));
+			string 			_curSelectedFolder		= EditorUtility.OpenFolderPanel("Select folder to compress", string.Empty, string.Empty);
+			DirectoryInfo 	_curDirectoryInfo		= new DirectoryInfo(_curSelectedFolder);
+			
+			// Set info
+			string 			_compressedFileName		= _curDirectoryInfo.Name + ".gz";
+			string 			_parentDirectoryPath	= _curDirectoryInfo.Parent.FullName;
+			
+			// Output file name
+			string 			_outputFileAbsolutePath	= Path.Combine(_parentDirectoryPath, _compressedFileName);
+			
+			// Now compress the file
+			CompressDirectory(_curSelectedFolder, _outputFileAbsolutePath, (string _outputMessage)=>{
+				Debug.Log(_outputMessage);
+			});
 		}
 
 		#endregion
@@ -66,6 +54,9 @@ namespace VoxelBusters.Utility
 
 		private static void CompressFile (string _rootDirectory, string _relativePath, GZipStream _zipStream)
 		{
+#if IO_UNSUPPORTED_PLATFORM
+			Debug.LogWarning("[Zip] Not supported.");
+#else
 			// Compress file name
 			char[] _relativePathCharArray = _relativePath.ToCharArray();
 
@@ -85,10 +76,14 @@ namespace VoxelBusters.Utility
 
 			// Adding file contents
 			_zipStream.Write(_fileContentsByteArray, 0, _fileContentsByteArray.Length);
+#endif
 		}
 	
 		public static void CompressDirectory (string _inputDirectory, string _zippedFileName, ProgressDelegate _progress)
 		{
+#if IO_UNSUPPORTED_PLATFORM
+			Debug.LogWarning("[Zip] Not supported.");
+#else
 			DirectoryInfo	_inputDirectoryInfo		= new DirectoryInfo(_inputDirectory);
 			Uri 			_inputDirectoryURI		= new Uri(_inputDirectory.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar);
 			
@@ -113,6 +108,7 @@ namespace VoxelBusters.Utility
 					}
 				}
 			}
+#endif
 		}
 
 		#endregion
@@ -122,12 +118,16 @@ namespace VoxelBusters.Utility
 		[MenuItem("Assets/Decompress")]
 		private static void Decompress ()
 		{
+#if IO_UNSUPPORTED_PLATFORM
+			Debug.LogWarning("[Zip] Not supported.");
+#else
 			string 		_zippedFilePath		= AssetsUtility.GUIDToAssetAbsolutePath(Selection.assetGUIDs[0]);
 			FileInfo	_fileInfo			= new FileInfo(_zippedFilePath);
 			
 			DecompressToDirectory(_zippedFilePath, _fileInfo.Directory.FullName, (string _outputMessage)=>{
 				Console.WriteLine(_outputMessage);
 			});
+#endif
 		}
 		
 		[MenuItem("Assets/Decompress", true)]

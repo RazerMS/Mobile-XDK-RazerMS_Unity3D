@@ -29,7 +29,7 @@ namespace VoxelBusters.NativePlugins
 		// Product info
 		private		const	bool		kIsFullVersion					= false;
 		private 	const 	string 		kProductName					= "Native Plugins";
-		private 	const 	string 		kProductVersion					= "1.3";
+		private 	const 	string 		kProductVersion					= "1.4";
 
 		// Pref key
 		private		const	string		kPrefsKeyBuildIdentifier		= "np-build-identifier";
@@ -70,9 +70,9 @@ namespace VoxelBusters.NativePlugins
 #if UNITY_5 || UNITY_6 || UNITY_7			
 			BuildTargetGroup.WSA, 
 #else
-			BuildTargetGroup.Metro, 
-#endif
+			BuildTargetGroup.Metro,
 			BuildTargetGroup.WP8,
+#endif
 			BuildTargetGroup.Standalone
 		};
 #endif
@@ -278,10 +278,9 @@ namespace VoxelBusters.NativePlugins
 
 		#region Constructor
 
-#if !DISABLE_NPSETTINGS_GENERATION
-#if UNITY_EDITOR
 		static NPSettings ()
 		{
+#if UNITY_EDITOR && !DISABLE_NPSETTINGS_GENERATION
 			EditorInvoke.Invoke(()=>{
 				NPSettings _instance	= NPSettings.Instance;
 
@@ -295,9 +294,8 @@ namespace VoxelBusters.NativePlugins
 				// Monitor player settings changes
 				_instance.MonitorPlayerSettings();
 			}, 1f, 1f);
+#endif
 		}
-#endif
-#endif
 
 		#endregion
 
@@ -316,9 +314,9 @@ namespace VoxelBusters.NativePlugins
 		{
 			base.OnEnable ();
 
-			// Set properties
 #if UNITY_EDITOR
-			m_assetStoreProduct	= new AssetStoreProduct(kProductName, kProductVersion, Constants.kLogoPath);
+			// Initialise components
+			Initialise();
 #endif
 
 			// Set debug mode
@@ -330,18 +328,58 @@ namespace VoxelBusters.NativePlugins
 
 		#endregion
 
-#if UNITY_EDITOR
+		#region Methods
+
+		private void Initialise ()
+		{
+			// Initialise product settings
+			m_assetStoreProduct	= new AssetStoreProduct(kProductName, kProductVersion, Constants.kLogoPath);
+
+			// Initialise Game Services settings
+#if USES_GAME_SERVICES
+			if (m_gameServicesSettings.AchievementMetadataCollection == null)
+			{
+				IDContainer[]			_achievementIDCollection	= m_gameServicesSettings.AchievementIDCollection;
+				int 					_count						= _achievementIDCollection.Length;
+				AchievementMetadata[] 	_metadataCollection			= new AchievementMetadata[_count];
+
+				for (int _iter = 0; _iter < _count; _iter++)
+					_metadataCollection[_iter]	= AchievementMetadata.Create(_achievementIDCollection[_iter]);
+
+				m_gameServicesSettings.AchievementMetadataCollection	= _metadataCollection;
+			}
+
+			if (m_gameServicesSettings.LeaderboardMetadataCollection == null)
+			{
+				IDContainer[]			_leaderboardIDCollection	= m_gameServicesSettings.LeaderboardIDCollection;
+				int 					_count						= _leaderboardIDCollection.Length;
+				LeaderboardMetadata[] 	_metadataCollection			= new LeaderboardMetadata[_count];
+				
+				for (int _iter = 0; _iter < _count; _iter++)
+					_metadataCollection[_iter]	= LeaderboardMetadata.Create(_leaderboardIDCollection[_iter]);
+				
+				m_gameServicesSettings.LeaderboardMetadataCollection	= _metadataCollection;
+			}
+#endif
+		}
+
+		#endregion
+
 		#region Editor Methods
 
+#if UNITY_EDITOR
 		public void SaveConfigurationChanges ()
 		{
-			// Reset flags
-			EditorPrefs.DeleteKey(kPrefsKeyPropertyModified);
-
 			// Actions
 			UpdateDefineSymbols();
 			UpdatePluginResources();
 			WriteAndroidManifestFile();
+
+			// Refresh Database
+			AssetDatabase.Refresh();
+
+			// Reset flags
+			EditorPrefs.DeleteKey(kPrefsKeyPropertyModified);
 		}
 
 		private void UpdateDefineSymbols ()
@@ -413,19 +451,18 @@ namespace VoxelBusters.NativePlugins
 				
 				// Save file
 				_generator.SaveManifest("com.voxelbusters.androidnativeplugin", _manifestFolderPath + "/AndroidManifest.xml");
-				
-				// Refresh
-				AssetDatabase.Refresh();
 			}
 		}
 		
 		private void UpdatePluginResources ()
 		{
-			// Update JAR files
-			UpdateJARFilesBasedOnFeaturesUsage();
-
-			// Copy required assets
-			CopyNotificationAssets();
+#if UNITY_ANDROID
+				// Update JAR files
+				UpdateResourcesBasedOnFeaturesUsage();
+#endif
+	
+				// Copy required assets
+				CopyNotificationAssets();
 		}
 
 		private void CopyNotificationAssets ()
@@ -472,12 +509,12 @@ namespace VoxelBusters.NativePlugins
 			
 			// Update value
 			EditorPrefs.SetString(kPrefsKeyBuildIdentifier, _curBuildIdentifier);
-			
+
 			// Save changes
 			SaveConfigurationChanges();
 		}
 		
-		private void UpdateJARFilesBasedOnFeaturesUsage()
+		private void UpdateResourcesBasedOnFeaturesUsage()
 		{
 			ApplicationSettings.Features 		_supportedFeatures		= m_applicationSettings.SupportedFeatures;
 			ApplicationSettings.AddonServices 	_supportedAddOnServices	= m_applicationSettings.SupportedAddonServices;
@@ -492,9 +529,8 @@ namespace VoxelBusters.NativePlugins
 			UpdateJARFile(_supportedFeatures.UsesSharing, 				Constants.kSharingJARName);
 			UpdateJARFile(_supportedFeatures.UsesTwitter, 				Constants.kSocialNetworkTwitterJARName);
 			UpdateJARFile(_supportedFeatures.UsesWebView, 				Constants.kWebviewJARName);
-			UpdateJARFile(_supportedAddOnServices.UsesSoomlaGrow, 		Constants.kSoomlaIntegrationJARName);
+			UpdateJARFile(_supportedAddOnServices.UsesSoomlaGrow, 		Constants.kSoomlaIntegrationJARName);		
 		}
-
 
 		private void UpdateJARFile (bool _usesFeature, string _JARName)
 		{
@@ -511,11 +547,13 @@ namespace VoxelBusters.NativePlugins
 				FileOperations.Rename(_filePath + ".jar.meta", _JARName + ".jar.unused.meta" );
 			}
 		}
+#endif
 
 		#endregion
 
 		#region Editor Callback Methods
 
+#if UNITY_EDITOR
 		private void RefreshEditorGameCenter ()
 		{
 #if USES_GAME_SERVICES
@@ -541,8 +579,8 @@ namespace VoxelBusters.NativePlugins
 		{
 			EditorPrefs.SetBool(kPrefsKeyPropertyModified, true);
 		}
+#endif
 
 		#endregion
-#endif
 	}
 }

@@ -1,11 +1,11 @@
 cd "$(dirname "$0")"
 echo "splitting jar files…"
 
-jar -xf androidnativeplugin.jar
+jar -xf NativePlugins.jar
 
 echo "extracted files…"
 
-rm -rf androidnativeplugin.jar
+rm -rf NativePlugins.jar
 
 echo "Packing individual jar files…"
 
@@ -20,9 +20,6 @@ rm -rf com/voxelbusters/nativeplugins/features/reachability
 echo "Making sharing.jar…"
 jar -cf feature.sharing.jar com/voxelbusters/nativeplugins/features/sharing
 rm -rf com/voxelbusters/nativeplugins/features/sharing
-
-
-
 
 echo "Making billing.jar…"
 jar -cf feature.billing.jar com/voxelbusters/nativeplugins/features/billing com/android/vending

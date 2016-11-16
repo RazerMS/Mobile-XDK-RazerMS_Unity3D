@@ -9,7 +9,7 @@ namespace VoxelBusters.ThirdParty.XUPorter
 {
 	public static class XCodePostProcess
 	{
-#if UNITY_EDITOR
+#if UNITY_EDITOR && UNITY_IOS
 		[PostProcessBuild(100)]
 		public static void OnPostProcessBuild( BuildTarget target, string pathToBuiltProject )
 		{

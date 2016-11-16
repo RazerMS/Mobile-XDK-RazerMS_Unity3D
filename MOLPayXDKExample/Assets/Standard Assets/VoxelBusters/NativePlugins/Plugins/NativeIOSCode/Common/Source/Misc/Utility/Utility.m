@@ -212,6 +212,7 @@ bool IsIpadInterface ()
 		return NULL;
 	
 	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+	[dateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"] autorelease]];
 	[dateFormatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
 	[dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
 

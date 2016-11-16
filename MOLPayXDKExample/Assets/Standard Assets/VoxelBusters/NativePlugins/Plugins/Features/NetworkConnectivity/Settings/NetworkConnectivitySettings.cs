@@ -9,22 +9,33 @@ namespace VoxelBusters.NativePlugins
 		#region Fields
 		
 		[SerializeField]
-		[Tooltip("The host IP address.")]
-		private 	string 			m_ipAddress 	= "8.8.8.8";
+		[Tooltip("The host IP address in IPv4 format.")]
+		private 	string 			m_hostAddressIPv4 	= "8.8.8.8";
 		[SerializeField]
-		private 	EditorSettings	m_editor		= new EditorSettings();
+		[Tooltip("The host IP address in IPv6 format.")]
+		private 	string 			m_hostAddressIPv6 	= "0:0:0:0:0:FFFF:0808:0808";
 		[SerializeField]
-		private 	AndroidSettings	m_android		= new AndroidSettings();
+		private 	EditorSettings	m_editor			= new EditorSettings();
+		[SerializeField]
+		private 	AndroidSettings	m_android			= new AndroidSettings();
 
 		#endregion
 
 		#region Properties
 
-		internal string IPAddress
+		internal string HostAddressIPv4
 		{
 			get 
 			{ 
-				return m_ipAddress; 
+				return m_hostAddressIPv4; 
+			}
+		}
+		
+		internal string HostAddressIPv6
+		{
+			get 
+			{ 
+				return m_hostAddressIPv6; 
 			}
 		}
 

@@ -31,9 +31,11 @@ namespace VoxelBusters.Utility
 		{
 			// Update object
 			serializedObject.Update();
-			
+
+#pragma warning disable
 			// Make all EditorGUI look like regular controls
 			EditorGUIUtility.LookLikeControls();
+#pragma warning restore
 
 			// Draw inspector
 			GUILayout.BeginVertical(EditorStyles.inspectorFullWidthMargins);

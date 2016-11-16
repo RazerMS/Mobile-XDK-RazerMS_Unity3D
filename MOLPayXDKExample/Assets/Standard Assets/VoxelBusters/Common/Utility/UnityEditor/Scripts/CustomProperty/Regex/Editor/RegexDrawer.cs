@@ -23,8 +23,7 @@ namespace VoxelBusters.Utility
 		#region Drawer Methods
 
 		// Here you must define the height of your property drawer. Called by Unity.
-		public override float GetPropertyHeight (SerializedProperty prop,
-		                                         GUIContent label) 
+		public override float GetPropertyHeight (SerializedProperty prop, GUIContent label) 
 		{
 			if (IsValid (prop))
 				return base.GetPropertyHeight (prop, label);
@@ -33,9 +32,7 @@ namespace VoxelBusters.Utility
 		}
 		
 		// Here you can define the GUI for your property drawer. Called by Unity.
-		public override void OnGUI (Rect position,
-		                            SerializedProperty prop,
-		                            GUIContent label) 
+		public override void OnGUI (Rect position, SerializedProperty prop, GUIContent label) 
 		{
 			// Adjust height of the text field
 			Rect textFieldPosition = position;

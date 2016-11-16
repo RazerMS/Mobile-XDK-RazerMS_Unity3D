@@ -29,7 +29,7 @@ namespace VoxelBusters.NativePlugins
 
 			NetworkConnectivitySettings _settings = NPSettings.NetworkConnectivity;
 
-			Plugin.Call(Native.Methods.INITIALIZE,_settings.IPAddress, 
+			Plugin.Call(Native.Methods.INITIALIZE,_settings.HostAddressIPv4, 
 			            							_settings.Android.Port, 
 													_settings.Android.TimeGapBetweenPolling, 
 													_settings.Android.TimeOutPeriod,
