@@ -54,6 +54,8 @@ namespace VoxelBusters.NativePlugins.Internal
 				//Copy common assets
 				_sourceFolderPath		= Path.Combine(GetPluginResourcesPath(), "Common");
 				CopyFiles(_sourceFolderPath, _saveFolderPath, _needsLowerCaseFileNames, false);
+
+				AssetDatabase.Refresh();
 			}
 		}
 

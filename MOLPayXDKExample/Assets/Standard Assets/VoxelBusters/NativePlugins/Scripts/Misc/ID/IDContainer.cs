@@ -9,11 +9,30 @@ namespace VoxelBusters.NativePlugins
 		#region Fields
 		
 		[SerializeField]
-		private 		string				m_globalID;
-		
+		private 	string			m_globalID;
 		[SerializeField]
-		private			PlatformID[]		m_platformIDs;
+		private		PlatformID[]	m_platformIDs;
 		
+		#endregion
+
+		#region Properties
+
+		public string GlobalID
+		{
+			get
+			{
+				return m_globalID;
+			}
+		}
+		
+		public PlatformID[] PlatformIDs
+		{
+			get
+			{
+				return m_platformIDs;
+			}
+		}
+
 		#endregion
 
 		#region Constructors
@@ -30,9 +49,9 @@ namespace VoxelBusters.NativePlugins
 
 		#endregion
 
-		#region Global ID Methods
+		#region Methods
 
-		public bool CompareGlobalID (string _identifier)
+		public bool EqualsGlobalID (string _identifier)
 		{
 			if (m_globalID == null)
 				return false;
@@ -40,48 +59,14 @@ namespace VoxelBusters.NativePlugins
 			return m_globalID.Equals(_identifier);
 		}
 
-		public string GetGlobalID ()
+		public bool EqualsCurrentPlatformID (string _identifier)
 		{
-			return m_globalID;
-		}
-
-		#endregion
-
-		#region Platform ID Methods
-
-		public bool CompareCurrentPlatformID (string _identifier)
-		{
-			string _curPlatformID	= GetCurrentPlatformID();
+			string _curPlatformID	= m_platformIDs.GetCurrentPlatformID();
 
 			if (_curPlatformID == null)
 				return false;
 
 			return _curPlatformID.Equals(_identifier);
-		}
-
-		public string GetCurrentPlatformID ()
-		{
-			if (m_platformIDs == null)
-				return null;
-
-			// Iterate and find platform specific id
-			foreach (PlatformID _curID in m_platformIDs)
-			{
-#if UNITY_EDITOR
-				if (_curID.Platform == PlatformID.ePlatform.EDITOR)
-					return _curID.Value;
-#endif
-
-#if UNITY_ANDROID
-				if (_curID.Platform == PlatformID.ePlatform.ANDROID)
-					return _curID.Value;
-#elif UNITY_IOS
-				if (_curID.Platform == PlatformID.ePlatform.IOS)
-					return _curID.Value;
-#endif
-			}
-
-			return null;
 		}
 
 		#endregion

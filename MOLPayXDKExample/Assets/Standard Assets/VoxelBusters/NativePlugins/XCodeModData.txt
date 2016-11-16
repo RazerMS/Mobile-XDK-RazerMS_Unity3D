@@ -106,7 +106,7 @@
     "group": "NativePlugins-NetworkConnectivity",
     "folders": [
       "NetworkConnectivity/Assets",
-      "NetworkConnectivity/External:-fno-objc-arc",
+      "NetworkConnectivity/External:-fobjc-arc",
       "NetworkConnectivity/Source:-fno-objc-arc"
     ],
     "excludes": [
@@ -164,11 +164,17 @@
       "^.*.DS_Store"
     ]
   },
-  "NativePlugins-TwitterFramework": {
+  "NativePlugins-TwitterSDK": {
     "group": "NativePlugins-Twitter",
+    "frameworks": [
+      "CoreData.framework",
+      "CoreText.framework"
+    ],
     "files": [
-      "Twitter/Framework/Fabric.framework",
-      "Twitter/Framework/TwitterKit.framework"
+      "Twitter/Fabric.framework",
+      "Twitter/TwitterCore.framework",
+      "Twitter/TwitterKit.framework",
+      "Twitter/TwitterKitResources.bundle"
     ],
     "excludes": [
       "^.*.meta$",

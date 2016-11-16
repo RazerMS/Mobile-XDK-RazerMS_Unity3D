@@ -7,8 +7,19 @@ namespace VoxelBusters.NativePlugins
 {
 	using Internal;
 
-	public class UtilityAndroid : Utility 
+	public partial class UtilityAndroid : Utility 
 	{
+
+		#region Constructors
+		
+		UtilityAndroid()
+		{
+			Plugin = AndroidPluginUtility.GetSingletonInstance(Native.Class.NAME);
+		}
+		
+		#endregion
+		
+
 		#region API's
 
 		public override void OpenStoreLink (string _applicationID)
@@ -22,7 +33,7 @@ namespace VoxelBusters.NativePlugins
 
 		public override void SetApplicationIconBadgeNumber (int _badgeNumber)
 		{
-			Console.LogError(Constants.kDebugTag, Constants.kiOSFeature);
+			Plugin.Call(Native.Methods.SET_APPLICATION_ICON_BADGE_NUMBER, _badgeNumber);
 		}
 
 		#endregion

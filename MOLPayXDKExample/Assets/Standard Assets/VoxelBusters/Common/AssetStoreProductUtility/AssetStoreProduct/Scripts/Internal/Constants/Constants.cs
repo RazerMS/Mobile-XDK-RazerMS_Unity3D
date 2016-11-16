@@ -9,7 +9,7 @@ namespace VoxelBusters.AssetStoreProductUtility.Internal
 	internal partial class Constants : MonoBehaviour 
 	{
 		// Related to company 
-		internal const 	string 				kCopyrights						= "Copyright © 2015 Voxel Busters Interactive LLP. All rights reserved.";
+		internal const 	string 				kCopyrights						= "Copyright © 2016 Voxel Busters Interactive LLP. All rights reserved.";
 
 		// Related to update window
 		internal const 	string 				kButtonSkipVersion				= "Skip";

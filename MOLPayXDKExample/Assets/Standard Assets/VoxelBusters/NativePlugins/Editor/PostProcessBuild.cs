@@ -24,7 +24,7 @@ namespace VoxelBusters.NativePlugins
 		private const string	kRelativePathXcodeModDataCollectionFile	= kRelativePathNativePluginsFolder + "/XCodeModData.txt";
 		private const string 	kRelativePathInfoPlistFile				= "Info.plist";
 		private const string 	kRelativePathInfoPlistBackupFile		= "Info.backup.plist";
-		private	const string	kRelativePathNativePluginsTempFolder	= "NativePlugins";
+		private	const string	kRelativePathNativePluginsSDKFolder		= "NativePlugins";
 
 		// Mod keys
 		private	const string	kModKeyAddressBook						= "NativePlugins-AddressBook";
@@ -37,7 +37,7 @@ namespace VoxelBusters.NativePlugins
 		private	const string	kModKeyNotification						= "NativePlugins-Notification";
 		private	const string	kModKeySharing							= "NativePlugins-Sharing";
 		private	const string	kModKeyTwitter							= "NativePlugins-Twitter";
-		private	const string	kModKeyTwitterFramework					= "NativePlugins-TwitterFramework";
+		private	const string	kModKeyTwitterSDK						= "NativePlugins-TwitterSDK";
 		private	const string	kModKeyWebView							= "NativePlugins-WebView";
 		private	const string	kModKeySoomlaGrow						= "NativePlugins-SoomlaGrow";
 
@@ -106,19 +106,14 @@ namespace VoxelBusters.NativePlugins
 
 		private static void CleanupProject ()
 		{
-			// Remove xmod files
-			string		_nativeCodePath	= AssetsUtility.AssetPathToAbsolutePath(kRelativePathIOSNativeCodeFolder);
-			string[] 	_modFiles		= Directory.GetFiles(_nativeCodePath, "*.xcodemods", SearchOption.AllDirectories);
-			
-			foreach (string _filePath in _modFiles)
+			foreach (string _filePath in Directory.GetFiles(kRelativePathIOSNativeCodeFolder, "*.xcodemods", SearchOption.AllDirectories))
 			{
 				// Delete file
 				File.SetAttributes(_filePath, FileAttributes.Normal);
 				File.Delete(_filePath);
-
+				
 				// Delete meta file
 				string	_metaFilePath	= _filePath + ".meta";
-
 				if (File.Exists(_metaFilePath))
 				{
 					File.SetAttributes(_metaFilePath, FileAttributes.Normal);
@@ -130,14 +125,14 @@ namespace VoxelBusters.NativePlugins
 		private static void ProcessFeatureSpecificOperations ()
 		{
 			// Remove NP temp folder
-			if (Directory.Exists(kRelativePathNativePluginsTempFolder))
+			if (Directory.Exists(kRelativePathNativePluginsSDKFolder))
 			{
-				IOExtensions.AssignPermissionRecursively(kRelativePathNativePluginsTempFolder, FileAttributes.Normal);
-				Directory.Delete(kRelativePathNativePluginsTempFolder, true);
+				IOExtensions.AssignPermissionRecursively(kRelativePathNativePluginsSDKFolder, FileAttributes.Normal);
+				Directory.Delete(kRelativePathNativePluginsSDKFolder, true);
 			}
 
 			// Create temp folder to place extracted files
-			Directory.CreateDirectory(kRelativePathNativePluginsTempFolder);
+			Directory.CreateDirectory(kRelativePathNativePluginsSDKFolder);
 
 			// Add player settings info to receipt verification code
 			ApplicationSettings.Features	_supportedFeatures	= NPSettings.Application.SupportedFeatures;
@@ -147,7 +142,7 @@ namespace VoxelBusters.NativePlugins
 
 			// Decompress zip files and add it to project
 			if (_supportedFeatures.UsesTwitter)
-				DecompressTwitterFrameworkFiles();
+				DecompressTwitterSDKFiles();
 		}
 		
 		private static void AddBuildInfoToReceiptVerificationManger ()
@@ -177,28 +172,16 @@ namespace VoxelBusters.NativePlugins
 			File.WriteAllLines(_rvFilePath, _contents);
 		}
 		
-		private static void DecompressTwitterFrameworkFiles ()
+		private static void DecompressTwitterSDKFiles ()
 		{
 			string		_projectPath					= AssetsUtility.GetProjectPath();
 			string		_twitterNativeCodeFolderPath	= Path.Combine(_projectPath, kRelativePathIOSNativeCodeFolder + "/Twitter");
-			string		_twitterTempFolderPath			= Path.Combine(_projectPath, kRelativePathNativePluginsTempFolder + "/Twitter");
-			
+
 			if (!Directory.Exists(_twitterNativeCodeFolderPath)) 
 				return;
-			
-			Directory.CreateDirectory(_twitterTempFolderPath);
-			
-			// ***********************
-			// Framework Section
-			// ***********************
-			string[] 	_zippedFiles		= Directory.GetFiles(_twitterNativeCodeFolderPath, "*.gz", SearchOption.AllDirectories);
-			string		_destFolder			= Path.Combine(_twitterTempFolderPath, "Framework");
-			
-			Directory.CreateDirectory(_destFolder);
-			
-			// Iterate through each zip files
-			foreach (string _curZippedFile in _zippedFiles) 
-				Zip.DecompressToDirectory(_curZippedFile, _destFolder);
+
+			foreach (string _filePath in Directory.GetFiles(_twitterNativeCodeFolderPath, "*.gz", SearchOption.AllDirectories))
+				Zip.DecompressToDirectory(_filePath, kRelativePathNativePluginsSDKFolder);
 		}
 
 		private static void	GenerateXcodeModFiles ()
@@ -242,7 +225,7 @@ namespace VoxelBusters.NativePlugins
 			if (_supportedFeatures.UsesTwitter)
 			{
 				ExtractAndSerializeXcodeModInfo(_xcodeModDataCollectionDict,	kModKeyTwitter, 		kRelativePathIOSNativeCodeFolder);
-				ExtractAndSerializeXcodeModInfo(_xcodeModDataCollectionDict,	kModKeyTwitterFramework,kRelativePathNativePluginsTempFolder);
+				ExtractAndSerializeXcodeModInfo(_xcodeModDataCollectionDict,	kModKeyTwitterSDK,		kRelativePathNativePluginsSDKFolder);
 			}
 
 			if (_supportedFeatures.UsesWebView)

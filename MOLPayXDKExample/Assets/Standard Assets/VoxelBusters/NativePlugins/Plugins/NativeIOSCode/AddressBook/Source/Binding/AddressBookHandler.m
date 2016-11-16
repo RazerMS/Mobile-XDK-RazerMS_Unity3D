@@ -113,6 +113,8 @@
 
 - (void)readContacts
 {
+	NSCharacterSet *phoneNumExcludedCharacterSet	= [[NSCharacterSet characterSetWithCharactersInString:@"0123456789+"] invertedSet];
+	
 #ifdef __IPHONE_9_0
 	if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0"))
 	{
@@ -163,7 +165,12 @@
 				NSMutableArray *phoneNumList	= [NSMutableArray array];
 				
 				for (CNLabeledValue<CNPhoneNumber*> *phoneNumber in eachContact.phoneNumbers)
-					[phoneNumList addObject:[[phoneNumber value] stringValue]];
+				{
+					NSString *rawFormatNumber	= [[phoneNumber value] stringValue];
+					NSString *formattedNumber	= [[rawFormatNumber componentsSeparatedByCharactersInSet:phoneNumExcludedCharacterSet] componentsJoinedByString:@""];
+					
+					[phoneNumList addObject:formattedNumber];
+				}
 				
 				contactInfoDict[kPhoneNumList]	= phoneNumList;
 			}
@@ -226,7 +233,6 @@
 			ABMultiValueRef phoneNumbersRef 		= CFBridgingRelease(ABRecordCopyValue(person, kABPersonPhoneProperty));
 			CFIndex phoneNumberCount        		= ABMultiValueGetCount(phoneNumbersRef);
 			NSMutableArray *phoneNumberList			= [NSMutableArray array];
-			NSCharacterSet *excludedCharacterSet	= [[NSCharacterSet characterSetWithCharactersInString:@"0123456789+"] invertedSet];
 
 			for (CFIndex pIter = 0; pIter < phoneNumberCount; pIter++)
 			{
@@ -234,7 +240,7 @@
 				
 				if (curNumber)
 				{
-					NSString *formattedNum 	= [[curNumber componentsSeparatedByCharactersInSet:excludedCharacterSet] componentsJoinedByString:@""];
+					NSString *formattedNum 	= [[curNumber componentsSeparatedByCharactersInSet:phoneNumExcludedCharacterSet] componentsJoinedByString:@""];
 					
 					// Add phone no
 					[phoneNumberList addObject:formattedNum];

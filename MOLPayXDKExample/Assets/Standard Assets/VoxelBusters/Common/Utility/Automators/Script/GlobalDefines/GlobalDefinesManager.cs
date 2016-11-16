@@ -1,11 +1,15 @@
-﻿using UnityEngine;
+﻿#if (UNITY_WEBPLAYER || UNITY_WEBGL || NETFX_CORE)
+#define IO_UNSUPPORTED_PLATFORM
+#endif
+
+using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-#if UNITY_EDITOR && !(UNITY_WEBPLAYER || UNITY_WEBGL)
+#if UNITY_EDITOR
 using UnityEditor;
 
 namespace VoxelBusters.Utility
@@ -46,7 +50,9 @@ namespace VoxelBusters.Utility
 			private set;
 		}
 
+#if !IO_UNSUPPORTED_PLATFORM
 		private		static	string			reimportFilePath		= null;
+#endif
 
 		#endregion
 
@@ -214,6 +220,9 @@ namespace VoxelBusters.Utility
 
 		private void ReimportToForceCompile ()
 		{
+#if IO_UNSUPPORTED_PLATFORM
+			Debug.LogWarning("[GlobalDefinesManager] Not supported.");
+#else
 			// Refesh 
 			AssetDatabase.Refresh();
 
@@ -236,6 +245,7 @@ namespace VoxelBusters.Utility
 			}
 
 			AssetDatabase.ImportAsset(reimportFilePath, ImportAssetOptions.ForceUpdate);
+#endif
 		}
 
 		#endregion

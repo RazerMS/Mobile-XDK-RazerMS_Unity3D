@@ -139,6 +139,23 @@ namespace VoxelBusters.NativePlugins.Demo
 			AddNewResult("Started reading contacts in background. Please wait...");
 			NPBinding.AddressBook.ReadContacts(OnReceivingContacts);			
 		}
+
+		private void LoadContactsImageAtIndex (int _index)
+		{
+			AddressBookContact 	_contactInfo	= m_contactsInfo[_index];
+
+			_contactInfo.GetImageAsync((Texture2D _texture, string _error)=>{
+				if (!string.IsNullOrEmpty(_error))
+				{
+					Console.LogError(Constants.kDebugTag, "[AddressBook] Contact Picture download failed " + _error);
+					m_contactPictures[_index] = null;
+				}
+				else
+				{
+					m_contactPictures[_index] = _texture;
+				}
+			});
+		}
 		
 		#endregion
 	
@@ -151,10 +168,16 @@ namespace VoxelBusters.NativePlugins.Demo
 			if (_contactList != null)
 			{
 				AppendResult(string.Format("Total no of contacts info fetched is {0}.", _contactList.Length));
-				m_contactsInfo = _contactList;
+
+				// Cache received contacts info
+				m_contactsInfo				= _contactList;
+
+				// Start loading images
+				int		_totalContacts		= _contactList.Length;
+				m_contactPictures 			= new Texture[_totalContacts];
 					
-				// This loads textures into m_contactPictures
-				StartCoroutine(LoadContactPictures(m_contactsInfo));
+				for (int _iter = 0; _iter < _totalContacts; _iter++)
+					LoadContactsImageAtIndex(_iter);
 			}
 		}
 
@@ -163,33 +186,6 @@ namespace VoxelBusters.NativePlugins.Demo
 			AddNewResult(string.Format("Add new contact information request finished. Status = {0}. Error = {1}.", _status, _error.GetPrintableString()));
 		}
 
-		#endregion
-	
-		#region Misc. Methods
-
-		private IEnumerator LoadContactPictures (AddressBookContact[] _contactList)
-		{
-			m_contactPictures = new Texture[_contactList.Length];
-			
-			for (int _cIndex = 0; _cIndex < _contactList.Length ; _cIndex++)
-			{
-				_contactList[_cIndex].GetImageAsync((Texture2D _texture, string _error)=>{
-					
-					if (!string.IsNullOrEmpty(_error))
-					{
-						Console.LogError(Constants.kDebugTag, "[AddressBook] Contact Picture download failed " + _error);
-						m_contactPictures[_cIndex] = null;
-					}
-					else
-					{
-						m_contactPictures[_cIndex] = _texture;
-					}
-				});
-
-				yield return new WaitForEndOfFrame();
-			}
-		}
-	
 		#endregion
 	}
 #endif

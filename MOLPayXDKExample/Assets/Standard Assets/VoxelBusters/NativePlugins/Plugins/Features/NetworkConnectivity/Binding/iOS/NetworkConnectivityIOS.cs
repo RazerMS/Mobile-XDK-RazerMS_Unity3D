@@ -11,7 +11,7 @@ namespace VoxelBusters.NativePlugins
 		#region Native Methods
 
 		[DllImport("__Internal")]
-		private static extern void setNewIPAddress (string _newIPAddress);
+		private static extern void cpnpNetworkConnectivitySetHostAddress (string _newIPAddress);
 
 		#endregion
 
@@ -23,8 +23,7 @@ namespace VoxelBusters.NativePlugins
 
 			NetworkConnectivitySettings _settings = NPSettings.NetworkConnectivity;
 
-			// Set new IP address
-			setNewIPAddress(_settings.IPAddress);
+			cpnpNetworkConnectivitySetHostAddress(_settings.HostAddressIPv6);
 		}
 
 		#endregion

@@ -45,6 +45,7 @@ namespace VoxelBusters.NativePlugins
 				              _name:			"com.voxelbusters.nativeplugins.features.billing.serviceprovider.google.GoogleBillingActivity",
 						      _theme:			"@style/FloatingActivityTheme",
 				              _comment:			"Billing : Activity used for purchase view");
+
 			}
 			
 			// Media
@@ -74,11 +75,11 @@ namespace VoxelBusters.NativePlugins
 				WriteActivity(_xmlWriter:		_xmlWriter,
 				              _name:			"com.voxelbusters.nativeplugins.features.notification.core.ApplicationLauncherFromNotification",
 				              _theme:			"@style/FloatingActivityTheme",
-				              _comment:			"Application Launcher - Notifications : Used as a proxy to capture triggered notification.");
+				              _exported:		"true",
+				              _comment:			"Application Launcher - Notifications : Used as a proxy to capture triggered notification.");				
 			}
 			
 			
-
 			// Twitter
 			if (m_supportedFeatures.UsesTwitter)
 			{
@@ -143,6 +144,27 @@ namespace VoxelBusters.NativePlugins
 		private void WriteReceiverInfo (XmlWriter _xmlWriter)
 		{
 			#if !NATIVE_PLUGINS_LITE_VERSION
+			
+			if (m_supportedFeatures.UsesBilling)
+			{
+				_xmlWriter.WriteComment("Billing : Amazon Billing Receiver");
+				_xmlWriter.WriteStartElement("receiver");
+				{
+					_xmlWriter.WriteAttributeString("android:name", 			"com.amazon.device.iap.ResponseReceiver");
+					
+					_xmlWriter.WriteStartElement("intent-filter");
+					{
+						WriteAction(_xmlWriter:		_xmlWriter,
+						            _name:			"com.amazon.inapp.purchasing.NOTIFY",
+						            _permission:	"com.amazon.inapp.purchasing.Permission.NOTIFY"
+									);
+					}
+					_xmlWriter.WriteEndElement();
+				}
+				_xmlWriter.WriteEndElement();
+			}
+
+	
 			// GCM receiver
 			if (m_supportedFeatures.UsesNotificationService)
 			{
@@ -259,8 +281,10 @@ namespace VoxelBusters.NativePlugins
 				                _protectionLevel:	"signature", 
 				                _comment: 			"For enabling GCM");
 
+				/* // https://groups.google.com/forum/#!topic/android-gcm/ecG-RfH-Aso
 				WriteUsesPermission(_xmlWriter:	_xmlWriter, 	
 				                    _name: 		"android.permission.GET_ACCOUNTS");
+				*/
 
 				WriteUsesPermission(_xmlWriter:	_xmlWriter, 	
 				                    _name: 		"android.permission.WAKE_LOCK");
@@ -286,11 +310,12 @@ namespace VoxelBusters.NativePlugins
 					                _name: 		"com.google.android.providers.gsf.permission.READ_GSERVICES", 	
 					                _comment: 	"GameServices : For getting content provider access.");
 
-				WriteUsesPermission(_xmlWriter:	_xmlWriter, 	
+				// Below permissions are no more required as we are targetting selective API's in Google Play Services.
+				/*WriteUsesPermission(_xmlWriter:	_xmlWriter, 	
 				                    _name: 		"android.permission.GET_ACCOUNTS");
 
 				WriteUsesPermission(_xmlWriter:	_xmlWriter, 	
-				                    _name: 		"android.permission.USE_CREDENTIALS");
+				                    _name: 		"android.permission.USE_CREDENTIALS");*/
 			}
 
 			#endif

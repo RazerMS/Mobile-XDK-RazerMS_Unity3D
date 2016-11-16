@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿#if (UNITY_WEBPLAYER || UNITY_WEBGL || NETFX_CORE)
+#define IO_UNSUPPORTED_PLATFORM
+#endif
+
+using UnityEngine;
 using System.Collections;
 
 #if UNITY_EDITOR
@@ -16,6 +20,9 @@ namespace VoxelBusters.NativePlugins.Internal
 
 		public static void DownloadSDK (string _downloadLink, string _errorTitle, string _errorMessage)
 		{
+#if IO_UNSUPPORTED_PLATFORM
+			Debug.LogWarning("[NPEditorUtility] Not supported.");
+#else
 			DownloadAsset 	_newRequest		= new DownloadAsset(URL.URLWithString(_downloadLink), true); 
 			_newRequest.OnCompletion		= (WWW _www, string _error)=> {
 				
@@ -45,6 +52,7 @@ namespace VoxelBusters.NativePlugins.Internal
 				}
 			};
 			_newRequest.StartRequest();
+#endif
 		}
 
 		#endregion

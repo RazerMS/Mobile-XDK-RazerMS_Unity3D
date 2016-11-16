@@ -14,7 +14,7 @@ namespace VoxelBusters.Utility
 		{ 
 			get 
 			{ 
-				return ((EnumMaskFieldAttribute)attribute); 
+				return (EnumMaskFieldAttribute)attribute; 
 			} 
 		}
 		
@@ -24,17 +24,12 @@ namespace VoxelBusters.Utility
 
 		public override void OnGUI (Rect _position, SerializedProperty _property, GUIContent _label)
 		{
-			EditorGUI.BeginProperty(_position, _label, _property);
+			_label	= EditorGUI.BeginProperty(_position, _label, _property);
 
-			// Draw enum mask field
 			if (EnumMaskFieldAttribute.IsEnum())
 			{
-				// Start checking if property was changed
 				EditorGUI.BeginChangeCheck();
-
 				System.Enum _enumValue	= EditorGUI.EnumMaskField(_position, _label, EnumMaskFieldAttribute.GetEnumValue(_property));
-
-				// Finish checking, update property value
 				if (EditorGUI.EndChangeCheck())
 					_property.intValue	= System.Convert.ToInt32(_enumValue);
 			}

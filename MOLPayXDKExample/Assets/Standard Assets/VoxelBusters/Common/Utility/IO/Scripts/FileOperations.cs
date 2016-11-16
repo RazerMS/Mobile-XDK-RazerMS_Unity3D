@@ -9,7 +9,6 @@ using File = UnityEngine.Windows.File;
 using File = System.IO.File;
 #endif
 
-
 namespace VoxelBusters.Utility
 {
 	public class FileOperations  
@@ -36,13 +35,13 @@ namespace VoxelBusters.Utility
 		/// <param name="_destinationPath">Path of destination.</param>
 		public static void Move (string _sourcePath, string _destinationPath)
 		{
-			#if (UNITY_WEBPLAYER || UNITY_WEBGL)
+#if (UNITY_WEBPLAYER || UNITY_WEBGL)
 			Debug.LogError("[CPFileOperations] File operations are not supported.");
-			#elif UNITY_WINRT
+#elif UNITY_WINRT
 			Debug.LogError("[CPFileOperations] Rename Unimplemeted on windows");
-			#else
+#else
 			File.Move(_sourcePath, _destinationPath);
-			#endif
+#endif
 		}
 
 		/// <summary>
@@ -95,15 +94,15 @@ namespace VoxelBusters.Utility
 		/// <param name="_filePath">The file to be opened for writing.</param>
 		public static StreamWriter CreateText (string _filePath)
 		{
-			#if (UNITY_WEBPLAYER || UNITY_WEBGL)
+#if (UNITY_WEBPLAYER || UNITY_WEBGL)
 			Debug.LogError("[CPFileOperations] File operations are not supported");
 			return null;
-			#elif UNITY_WINRT
+#elif UNITY_WINRT
 			Debug.LogError("[CPFileOperations] CreateText Un implemeted on windows");
 			return null;
-			#else
+#else
 			return File.CreateText(_filePath);
-			#endif
+#endif
 		}
 
 		/// <summary>
@@ -112,16 +111,26 @@ namespace VoxelBusters.Utility
 		/// <param name="_filePath">The file to be opened for writing.</param>
 		public static string ReadAllText (string _filePath)
 		{
-			#if (UNITY_WEBPLAYER || UNITY_WEBGL)
+#if (UNITY_WEBPLAYER || UNITY_WEBGL)
 			Debug.LogError("[CPFileOperations] File operations are not supported");
 			return null;
-			#elif UNITY_WINRT
+#elif UNITY_WINRT
 			Debug.LogError("[CPFileOperations] ReadAllText Un implemeted on windows");
 			return null;
-			#else
+#else
 			return File.ReadAllText(_filePath);
-			#endif
+#endif
+		}
 
+		public static void WriteAllText (string _filePath, string _contents)
+		{
+#if (UNITY_WEBPLAYER || UNITY_WEBGL)
+			Debug.LogError("[CPFileOperations] File operations are not supported");
+#elif UNITY_WINRT
+			Debug.LogError("[CPFileOperations] ReadAllText Un implemeted on windows");
+#else
+			File.WriteAllText(_filePath, _contents);
+#endif
 		}
 
 		/// <summary>
@@ -131,11 +140,11 @@ namespace VoxelBusters.Utility
 		/// <param name="_newFileName">New file name for this file.</param>
 		public static void Rename (string _filePath, string _newFileName)
 		{
-			#if (UNITY_WEBPLAYER || UNITY_WEBGL)
+#if (UNITY_WEBPLAYER || UNITY_WEBGL)
 			Debug.LogError("[CPFileOperations] File operations are not supported.");
-			#elif UNITY_WINRT
+#elif UNITY_WINRT
 			Debug.LogError("[CPFileOperations] Rename Unimplemeted on windows");
-			#else
+#else
 			string _fileName = Path.GetFileName(_filePath);
 			string _newFilePath = _filePath.Replace(_fileName, _newFileName);
 
@@ -147,7 +156,7 @@ namespace VoxelBusters.Utility
 				}
 				File.Move(_filePath, _newFilePath);
 			}
-			#endif
+#endif
 		}
 
 		#endregion

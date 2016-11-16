@@ -8,24 +8,24 @@ namespace VoxelBusters.Utility
 	[CustomPropertyDrawer(typeof(InspectorButtonAttribute))]
 	public class InspectorButtonDrawer : PropertyDrawer 
 	{
+		#region Constants
+		
+		private		const		float		kButtonWidth		= 228f;
+		private		const		float		kButtonHeight		= 21f;
+		private		const		float		kOffset				= 4f;
+		
+		#endregion
+
 		#region Properties
 		
 		private InspectorButtonAttribute InspectorButton
 		{ 
 			get 
 			{ 
-				return attribute as InspectorButtonAttribute; 
+				return (InspectorButtonAttribute)attribute; 
 			} 
 		}
 		
-		#endregion
-
-		#region Constants
-
-		private		const		float							kButtonWidth		= 228f;
-		private		const		float							kButtonHeight		= 21f;
-		private		const		float							kOffset				= 4f;
-
 		#endregion
 
 		#region Drawer Methods
@@ -40,9 +40,8 @@ namespace VoxelBusters.Utility
 
 		public override void OnGUI (Rect _position, SerializedProperty _property, GUIContent _label)
 		{
-			EditorGUI.BeginProperty(_position, _label, _property);
+			_label	= EditorGUI.BeginProperty(_position, _label, _property);
 
-			// Draw property
 			if (_property.isArray)
 			{
 				EditorGUI.PropertyField(_position, _property, _label, true);

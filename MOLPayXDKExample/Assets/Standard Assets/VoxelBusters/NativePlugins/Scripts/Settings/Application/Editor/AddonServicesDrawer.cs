@@ -37,25 +37,24 @@ namespace VoxelBusters.NativePlugins
 		
 		public override void OnGUI (Rect _position, SerializedProperty _property, GUIContent _label) 
 		{
-			EditorGUI.BeginProperty(_position, _label, _property);
+			_label	= EditorGUI.BeginProperty(_position, _label, _property);
 
 			// Calculate rectangle
-			Rect		_foldoutRect		= new Rect(_position.x, _position.y, _position.width, EditorGUIUtility.singleLineHeight);
+			Rect	_foldoutRect	= new Rect(_position.x, _position.y, _position.width, EditorGUIUtility.singleLineHeight);
 
 			// Draw property label
-			_property.isExpanded			= EditorGUI.Foldout(_foldoutRect, _property.isExpanded, _label);
+			_property.isExpanded	= EditorGUI.Foldout(_foldoutRect, _property.isExpanded, _label);
 
-			// Draw child properties
 			if (_property.isExpanded)
 			{
-				// First indent it to next level
-				EditorGUI.indentLevel++;
-
-				// Calculate rects
 				float	_buttonWidth		= Mathf.Min(80f, Screen.width * 0.25f);
 				Rect	_childPropertyRect	= new Rect(_position.x, _foldoutRect.yMax, _position.width - _buttonWidth, EditorGUIUtility.singleLineHeight);
 				Rect	_downloadButtonRect	= new Rect(_childPropertyRect.xMax, _foldoutRect.yMax, _buttonWidth, EditorGUIUtility.singleLineHeight);
 
+				// Move identation to next level
+				EditorGUI.indentLevel++;
+
+				// Draw child properties
 				foreach (string _propertyName in m_downloadActionCollection.Keys)
 				{
 					SerializedProperty	_childProperty	= _property.FindPropertyRelative(_propertyName);
@@ -63,7 +62,6 @@ namespace VoxelBusters.NativePlugins
 					if (_childProperty == null)
 						continue;
 		
-					// Draw current child property
 					EditorGUI.PropertyField(_childPropertyRect, _childProperty);
 					
 					if (GUI.Button(_downloadButtonRect, "Download"))
@@ -74,12 +72,11 @@ namespace VoxelBusters.NativePlugins
 							_downloadAction();
 					}
 					
-					// Update rect origin, required to rect next property
 					_childPropertyRect.y	= _childPropertyRect.yMax + kSpacingAfterEachElement;
 					_downloadButtonRect.y	= _downloadButtonRect.yMax + kSpacingAfterEachElement;
 				}
 
-				// Reset indendation
+				// Reset indendation to what it was
 				EditorGUI.indentLevel--;
 			}
 			

@@ -9,7 +9,7 @@
 #import "NetworkConnectivityBinding.h"
 #import "NetworkConnectivityHandler.h"
 
-void setNewIPAddress (const char *newIPAddress)
+void cpnpNetworkConnectivitySetHostAddress (const char *address)
 {
-	[[NetworkConnectivityHandler Instance] setNewIPAddress:ConvertToNSString(newIPAddress)];
+	[[NetworkConnectivityHandler Instance] setHostAddress:ConvertToNSString(address)];
 }

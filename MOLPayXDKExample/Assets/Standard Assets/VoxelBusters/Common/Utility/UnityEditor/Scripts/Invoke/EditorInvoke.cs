@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace VoxelBusters.Utility
 
 #pragma warning disable
 		// Related to invoke
-		private static double				m_cachedTimeSinceStartup	= 0f;
+		private static DateTime				m_cachedTimeSinceStartup;
 #pragma warning restore
 
 		private static Dictionary<System.Action, Dictionary<string, float>>	invokeMethodsContainer;
@@ -40,7 +41,7 @@ namespace VoxelBusters.Utility
 			invokeMethodsContainer		= new Dictionary<System.Action, Dictionary<string, float>>();
 
 #if UNITY_EDITOR
-			m_cachedTimeSinceStartup	= EditorApplication.timeSinceStartup;
+			m_cachedTimeSinceStartup	= DateTime.Now;//EditorApplication.timeSinceStartup;
 
 			// Register for updates
 			EditorApplication.update	-= ManageMethodInvoke;
@@ -56,7 +57,7 @@ namespace VoxelBusters.Utility
 
 		private static void ManageMethodInvoke ()
 		{
-			float _dt					= (float)(EditorApplication.timeSinceStartup - m_cachedTimeSinceStartup);
+			float _dt					= (DateTime.Now - m_cachedTimeSinceStartup).Milliseconds/1000f;
 			System.Action[] _methodList	= invokeMethodsContainer.Keys.ToArray<System.Action>();
 
 			for (int _iter = 0; _iter < _methodList.Length; _iter++)
@@ -87,7 +88,7 @@ namespace VoxelBusters.Utility
 			}
 			
 			// Cache time
-			m_cachedTimeSinceStartup		= EditorApplication.timeSinceStartup;
+			m_cachedTimeSinceStartup		= DateTime.Now;
 		}
 
 #endif

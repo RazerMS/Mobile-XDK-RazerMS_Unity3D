@@ -503,14 +503,10 @@
 		// By default we will hide loading spinner
 		[self hideLoadingSpinner];
 		
-		// Show spinner if its not auto show on load
-		if (![self autoShowOnLoadFinish])
+		// Show spinner if required
+		if (self.showSpinnerOnLoad)
 		{
-			// Show spinner if required
-			if (self.showSpinnerOnLoad)
-			{
-				[self showLoadingSpinner];
-			}
+			[self showLoadingSpinner];
 		}
     }
     else

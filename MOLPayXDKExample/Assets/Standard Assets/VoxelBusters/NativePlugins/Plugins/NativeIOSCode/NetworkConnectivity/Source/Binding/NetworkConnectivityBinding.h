@@ -8,4 +8,4 @@
 
 #import <Foundation/Foundation.h>
 
-UIKIT_EXTERN void setNewIPAddress (const char *newIPAddress);
+UIKIT_EXTERN void cpnpNetworkConnectivitySetHostAddress (const char *address);

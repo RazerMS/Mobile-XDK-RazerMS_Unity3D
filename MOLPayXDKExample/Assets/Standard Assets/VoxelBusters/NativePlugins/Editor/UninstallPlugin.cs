@@ -17,14 +17,15 @@ namespace VoxelBusters.NativePlugins.Internal
 
 		private static string[] kPluginFolders	=	new string[]
 		{
-			Constants.kAndroidPluginsPath + "/support_lib",
-			Constants.kAndroidPluginsPath + "/twitter_lib",
-			Constants.kAndroidPluginsPath + "/native_plugins_lib",
-			Constants.kAndroidPluginsPath + "/voxelbusters_utility_lib",
-			Constants.kVBCodebasePath + "/NativePlugins",
-			Constants.kVBCodebasePath + "/Common",
-			Constants.kVBCodebasePath + "/DebugPro",
-			Constants.kVBExternalCodebasePath + "NativePlugins PlayMaker"
+			Constants.kAndroidPluginsPath 		+	"/support_lib",
+			Constants.kAndroidPluginsPath 		+	"/twitter_lib",
+			Constants.kAndroidPluginsPath 		+	"/native_plugins_lib",
+			Constants.kAndroidPluginsPath 		+	"/voxelbusters_utility_lib",
+			Constants.kAndroidPluginsPath 		+	"/google-play-services_lib",
+			Constants.kVBCodebasePath 			+	"/NativePlugins",
+			Constants.kVBCodebasePath			+	"/Common",
+			Constants.kVBCodebasePath			+	"/DebugPro",
+			Constants.kVBExternalCodebasePath 	+ 	"/NativePlugins"
 		};
 		
 		#endregion	
@@ -61,9 +62,9 @@ namespace VoxelBusters.NativePlugins.Internal
 				_definesManager.SaveAllCompilers();
 				
 				AssetDatabase.Refresh();
-				EditorUtility.DisplayDialog("Cross Platform Native Plugin",
+				EditorUtility.DisplayDialog("Cross Platform Native Plugins",
 				                            "Uninstall successful!", 
-				                            "ok");
+				                            "Ok");
 			}
 		}
 		

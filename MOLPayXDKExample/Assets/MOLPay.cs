@@ -83,8 +83,10 @@ namespace MOLPayXDK
 			}
 		}
 
+#if UNITY_IOS
 		[DllImport("__Internal")]  
-		private static extern void _SavePhoto(string readAddr);  
+		private static extern void _SavePhoto(string readAddr);
+#endif
 
 		public void StartMolpay(Dictionary<String, object> paymentDetails, Action<string> callback)
 		{
@@ -116,152 +118,159 @@ namespace MOLPayXDK
 
 		private void MPMainUIOnReceivedMessage(UniWebView webView, UniWebViewMessage message)
 		{
-			String loadingUrl = string.Empty;
-			if (message.rawMessage != null && message.rawMessage != string.Empty)
+			try
 			{
-				//Debug.Log("UniWebViewMessage message: " + message.rawMessage);
-				loadingUrl = message.rawMessage.Replace(uniwebview, "");
-			}
+				String loadingUrl = string.Empty;
+				if (message.rawMessage != null && message.rawMessage != string.Empty)
+				{
+					//Debug.Log("UniWebViewMessage message: " + message.rawMessage);
+					loadingUrl = message.rawMessage.Replace(uniwebview, "");
+				}
 
-			if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpopenmolpaywindow))
-			{
-				mpMainUI.Stop();
-				String base64String = loadingUrl.Replace(mpopenmolpaywindow, "");
+				if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpopenmolpaywindow))
+				{
+					mpMainUI.Stop();
+					String base64String = loadingUrl.Replace(mpopenmolpaywindow, "");
 
 #if UNITY_IOS
-				base64String = base64String.Replace ("-", "+");
-				base64String = base64String.Replace ("_", "=");
+					base64String = base64String.Replace ("-", "+");
+					base64String = base64String.Replace ("_", "=");
 #endif
 
-				byte[] data = Convert.FromBase64String(base64String);
-				String decodedString = Encoding.UTF8.GetString(data);
+					byte[] data = Convert.FromBase64String(base64String);
+					String decodedString = Encoding.UTF8.GetString(data);
 
-				if (decodedString.Length > 0)
-				{
-					mpMOLPayUI = CreateWebView();
-
-					LoadFromText(mpMOLPayUI, decodedString);
-					mpMOLPayUI.OnLoadBegin += MPMOLPayUIOnLoadBegin;
-					mpMOLPayUI.OnLoadComplete += MPMOLPayUIOnLoadComplete;
-				}
-			}
-			else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpcloseallwindows))
-			{
-				if (mpBankUI != null)
-				{
-					mpBankUI.url = "about:blank";
-					mpBankUI.Load();
-					mpBankUI.Hide();
-					mpBankUI.CleanCache();
-					mpBankUI.CleanCookie();
-					mpBankUI = null;
-				}
-				mpMOLPayUI.url = "about:blank";
-				mpMOLPayUI.Load();
-				mpMOLPayUI.Hide();
-				mpMOLPayUI.CleanCache();
-				mpMOLPayUI.CleanCookie();
-				mpMOLPayUI = null;
-			}
-			else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mptransactionresults))
-			{
-				String base64String = loadingUrl.Replace(mptransactionresults, "");
-
-#if UNITY_IOS
-				base64String = base64String.Replace ("-", "+");
-				base64String = base64String.Replace ("_", "=");
-#endif
-
-				byte[] data = Convert.FromBase64String(base64String);
-				String decodedString = Encoding.UTF8.GetString(data);
-
-				if (decodedString.Length > 0)
-				{
-					transactionResult = decodedString;
-
-					try
+					if (decodedString.Length > 0)
 					{
-						Dictionary<String, object> jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
+						mpMOLPayUI = CreateWebView();
 
-						object requestType;
-						jsonResult.TryGetValue("mp_request_type", out requestType);
-						if (!jsonResult.ContainsKey("mp_request_type") || (String)requestType != "Receipt" || jsonResult.ContainsKey("error_code"))
+						LoadFromText(mpMOLPayUI, decodedString);
+						mpMOLPayUI.OnLoadBegin += MPMOLPayUIOnLoadBegin;
+						mpMOLPayUI.OnLoadComplete += MPMOLPayUIOnLoadComplete;
+					}
+				}
+				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpcloseallwindows))
+				{
+					if (mpBankUI != null)
+					{
+						mpBankUI.url = "about:blank";
+						mpBankUI.Load();
+						mpBankUI.Hide();
+						mpBankUI.CleanCache();
+						mpBankUI.CleanCookie();
+						mpBankUI = null;
+					}
+					mpMOLPayUI.url = "about:blank";
+					mpMOLPayUI.Load();
+					mpMOLPayUI.Hide();
+					mpMOLPayUI.CleanCache();
+					mpMOLPayUI.CleanCookie();
+					mpMOLPayUI = null;
+				}
+				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mptransactionresults))
+				{
+					String base64String = loadingUrl.Replace(mptransactionresults, "");
+
+#if UNITY_IOS
+					base64String = base64String.Replace ("-", "+");
+					base64String = base64String.Replace ("_", "=");
+#endif
+
+					byte[] data = Convert.FromBase64String(base64String);
+					String decodedString = Encoding.UTF8.GetString(data);
+
+					if (decodedString.Length > 0)
+					{
+						transactionResult = decodedString;
+
+						try
+						{
+							Dictionary<String, object> jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
+
+							object requestType;
+							jsonResult.TryGetValue("mp_request_type", out requestType);
+							if (!jsonResult.ContainsKey("mp_request_type") || (String)requestType != "Receipt" || jsonResult.ContainsKey("error_code"))
+							{
+								Finish();
+							}
+							else
+							{
+								isClosingReceipt = true;
+							}
+						}
+						catch (Exception)
 						{
 							Finish();
 						}
-						else
-						{
-							isClosingReceipt = true;
-						}
 					}
-					catch (Exception)
+				}
+				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mprunscriptonpopup))
+				{
+					String base64String = loadingUrl.Replace(mprunscriptonpopup, "");
+
+#if UNITY_IOS
+					base64String = base64String.Replace ("-", "+");
+					base64String = base64String.Replace ("_", "=");
+#endif
+
+					byte[] data = Convert.FromBase64String(base64String);
+					String decodedString = Encoding.UTF8.GetString(data);
+
+					if (decodedString.Length > 0)
 					{
-						Finish();
+						mpMOLPayUI.EvaluatingJavaScript(decodedString);
+					}
+				}
+				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mppinstructioncapture))
+				{
+					String base64String = loadingUrl.Replace(mppinstructioncapture, "");
+
+#if UNITY_IOS
+					base64String = base64String.Replace ("-", "+");
+					base64String = base64String.Replace ("_", "=");
+#endif
+
+					byte[] data = Convert.FromBase64String(base64String);
+					String decodedString = Encoding.UTF8.GetString(data);
+					Dictionary<String, object> jsonResult = Json.Deserialize(decodedString) as Dictionary<String, object>;
+
+					object base64ImageUrlData;
+					jsonResult.TryGetValue("base64ImageUrlData", out base64ImageUrlData);
+					object filename;
+					jsonResult.TryGetValue("filename", out filename);
+
+					byte[] imageData = Convert.FromBase64String(base64ImageUrlData.ToString());
+					String imageLocation = Application.persistentDataPath + "/" + filename.ToString();
+					File.WriteAllBytes(imageLocation, imageData);
+
+#if UNITY_IOS
+					_SavePhoto(imageLocation);
+#elif UNITY_ANDROID
+					using (AndroidJavaClass jcUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+					using (AndroidJavaObject joActivity = jcUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+					using (AndroidJavaObject joContext = joActivity.Call<AndroidJavaObject>("getApplicationContext"))
+					using (AndroidJavaClass jcMediaScannerConnection = new AndroidJavaClass("android.media.MediaScannerConnection"))
+					using (AndroidJavaClass jcEnvironment = new AndroidJavaClass("android.os.Environment"))
+					using (AndroidJavaObject joExDir = jcEnvironment.CallStatic<AndroidJavaObject>("getExternalStorageDirectory"))
+					{
+					    jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { imageLocation }, null, null);
+					}
+#endif
+
+					Debug.Log("imageLocation: " + imageLocation);
+					if (System.IO.File.Exists(imageLocation))
+					{
+						NPBinding.UI.ShowAlertDialogWithSingleButton("Info", "Image saved", "OK", OnButtonPressed);
+					}
+					else
+					{
+						NPBinding.UI.ShowAlertDialogWithSingleButton("Info", "Image not saved", "OK", OnButtonPressed);
 					}
 				}
 			}
-			else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mprunscriptonpopup))
+			catch (Exception)
 			{
-				String base64String = loadingUrl.Replace(mprunscriptonpopup, "");
 
-#if UNITY_IOS
-				base64String = base64String.Replace ("-", "+");
-				base64String = base64String.Replace ("_", "=");
-#endif
-
-				byte[] data = Convert.FromBase64String(base64String);
-				String decodedString = Encoding.UTF8.GetString(data);
-
-				if (decodedString.Length > 0)
-				{
-					mpMOLPayUI.EvaluatingJavaScript(decodedString);
-				}
-			}
-			else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mppinstructioncapture))
-			{
-				String base64String = loadingUrl.Replace(mppinstructioncapture, "");
-
-#if UNITY_IOS
-				base64String = base64String.Replace ("-", "+");
-				base64String = base64String.Replace ("_", "=");
-#endif
-
-				byte[] data = Convert.FromBase64String(base64String);
-				String decodedString = Encoding.UTF8.GetString(data);
-				Dictionary<String, object> jsonResult = Json.Deserialize(decodedString) as Dictionary<String, object>;
-
-				object base64ImageUrlData;
-				jsonResult.TryGetValue("base64ImageUrlData", out base64ImageUrlData);
-				object filename;
-				jsonResult.TryGetValue("filename", out filename);
-
-				byte[] imageData = Convert.FromBase64String(base64ImageUrlData.ToString());
-				String imageLocation = Application.persistentDataPath + "/" + filename.ToString();
-				File.WriteAllBytes(imageLocation, imageData);
-
-#if UNITY_IOS
-				_SavePhoto(imageLocation);
-#elif UNITY_ANDROID
-				using (AndroidJavaClass jcUnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-				using (AndroidJavaObject joActivity = jcUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-				using (AndroidJavaObject joContext = joActivity.Call<AndroidJavaObject>("getApplicationContext"))
-				using (AndroidJavaClass jcMediaScannerConnection = new AndroidJavaClass("android.media.MediaScannerConnection"))
-				using (AndroidJavaClass jcEnvironment = new AndroidJavaClass("android.os.Environment"))
-				using (AndroidJavaObject joExDir = jcEnvironment.CallStatic<AndroidJavaObject>("getExternalStorageDirectory"))
-				{
-				    jcMediaScannerConnection.CallStatic("scanFile", joContext, new string[] { imageLocation }, null, null);
-				}
-#endif
-
-				Debug.Log("imageLocation: " + imageLocation);
-				if (System.IO.File.Exists(imageLocation))
-				{
-					NPBinding.UI.ShowAlertDialogWithSingleButton("Info", "Image saved", "OK", OnButtonPressed);
-				}
-				else
-				{
-					NPBinding.UI.ShowAlertDialogWithSingleButton("Info", "Image not saved", "OK", OnButtonPressed);
-				}
 			}
 		}
 

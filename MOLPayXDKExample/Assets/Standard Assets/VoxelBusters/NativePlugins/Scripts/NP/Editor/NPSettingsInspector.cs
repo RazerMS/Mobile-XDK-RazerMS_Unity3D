@@ -38,7 +38,8 @@ namespace VoxelBusters.NativePlugins
 		private		const 	string					kLiteVersionProductURL	= "http://bit.ly/1KFEzdi";
 		private		const 	string					kTutorialURL			= "http://bit.ly/1ZFadk4";
 		private		const	string					kDocumentationURL		= "http://bit.ly/1cBFHDd";
-
+		private		const	string					kForumURL				= "http://bit.ly/1AjQRYp";
+		
 		// Keys
 		private		const	string					kUndoGroupApplicationSettings	= "application-settings";
 
@@ -55,7 +56,8 @@ namespace VoxelBusters.NativePlugins
 #pragma warning disable
 		private 			GUIContent				m_documentationText		= new GUIContent("Documentation", 	"One click access to online documentation.");
 		private 			GUIContent				m_saveChangesText		= new GUIContent("Save", 			"Save all your changes.");
-		private 			GUIContent				m_supportText			= new GUIContent("Support", 		"Houston, we have a problem!");
+		private 			GUIContent				m_forumText				= new GUIContent("Forum - Quick Response", 	"Houston, we have a problem!");
+		private 			GUIContent				m_contactText			= new GUIContent("Contact Us", 		"Contact us");
 		private 			GUIContent				m_tutotialsText			= new GUIContent("Tutorials", 		"Check our blog posts about product features and usage.");
 		private 			GUIContent				m_writeReviewText		= new GUIContent("Write a review", 	"Write a review to share your experience with others.");
 		private 			GUIContent				m_upgradeText			= new GUIContent("Upgrade", 		"Click to find out more about full version product.");
@@ -167,9 +169,12 @@ namespace VoxelBusters.NativePlugins
 				
 				if (GUILayout.Button(m_tutotialsText, Constants.kButtonMidStyle))
 					Application.OpenURL(kTutorialURL);
+
+				if (GUILayout.Button(m_forumText, Constants.kButtonMidStyle))
+					Application.OpenURL(kForumURL);
 				
-				if (GUILayout.Button(m_supportText, Constants.kButtonMidStyle))
-					OnPressingSupport();
+				if (GUILayout.Button(m_contactText, Constants.kButtonMidStyle))
+					OnPressingContact();
 				
 #if NATIVE_PLUGINS_LITE_VERSION
 				if (GUILayout.Button(m_upgradeText, Constants.kButtonMidStyle))
@@ -245,7 +250,7 @@ namespace VoxelBusters.NativePlugins
 							_propertyCopy.isExpanded	= true;
 							
 							EditorGUILayout.PropertyField(_propertyCopy, true);
-						}while (_propertyCopy.NextVisible(false));
+						} while (_propertyCopy.NextVisible(false));
 					}
 					GUILayout.EndVertical();
 				}
@@ -261,31 +266,11 @@ namespace VoxelBusters.NativePlugins
 			(target as NPSettings).SaveConfigurationChanges();
 		}
 
-		private void OnPressingSupport ()
+		private void OnPressingContact ()
 		{
-			string	_mailToAddress	= WWW.EscapeURL("support@voxelbusters.com").Replace("+","%20");
+			string	_mailToAddress	= WWW.EscapeURL("support+cross_platform_native_plugins@voxelbusters.com").Replace("+","%20");
 			
-			string	_mailToSubject	= null;
-
-#if NATIVE_PLUGINS_LITE_VERSION
-			_mailToSubject			= WWW.EscapeURL("[Cross Platform Native Plugins - LITE] : [Feature : ___________]").Replace("+","%20");;
-#else
-			_mailToSubject			= WWW.EscapeURL("[Cross Platform Native Plugins] : [Feature : ___________]").Replace("+","%20");;
-#endif
-
-			string	_mailBody		= WWW.EscapeURL("---------------------------------------------------------------------------- \n");
-
-			_mailBody			   += WWW.EscapeURL(string.Format("Invoice Number	: \n"));
-			_mailBody			   += WWW.EscapeURL(string.Format("Unity			: {0} \n", Application.unityVersion));
-			_mailBody			   += WWW.EscapeURL(string.Format("Stripping: 		: {0} \n", UnityEditor.PlayerSettings.strippingLevel));
-			_mailBody			   += WWW.EscapeURL(string.Format("API				: {0} \n", UnityEditor.PlayerSettings.apiCompatibilityLevel));
-			_mailBody			   += WWW.EscapeURL(string.Format("Target			: {0} \n", EditorUserBuildSettings.activeBuildTarget));
-			_mailBody			   += WWW.EscapeURL(string.Format("Platform			: {0} \n", Application.platform));
-			
-			_mailBody			   += WWW.EscapeURL("---------------------------------------------------------------------------- \n");
-			_mailBody				= _mailBody.Replace("+","%20");
-
-			string	_mailToString	= string.Format("mailto:{0}?subject={1}&body={2}", _mailToAddress, _mailToSubject, _mailBody);
+			string	_mailToString	= string.Format("mailto:{0}", _mailToAddress);
 			
 			// Opens mail client
 			Application.OpenURL(_mailToString);
