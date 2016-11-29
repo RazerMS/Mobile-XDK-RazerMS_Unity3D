@@ -40,7 +40,7 @@ namespace MOLPayXDK
 		public const String mp_is_recurring = "mp_is_recurring";
 		public const String mp_sandbox_mode = "mp_sandbox_mode";
 		public const String mp_allowed_channels = "mp_allowed_channels";
-        public const String mp_express_mode = "mp_express_mode";
+		public const String mp_express_mode = "mp_express_mode";
 
 #if UNITY_IOS
 		private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
@@ -344,33 +344,33 @@ namespace MOLPayXDK
 
 		private void NativeWebRequestUrlUpdates(UniWebView webView, String url)
 		{
-            try
-            {
-                Dictionary<String, object> data = new Dictionary<String, object>();
-                data.Add("requestPath", url);
+			try
+			{
+				Dictionary<String, object> data = new Dictionary<String, object>();
+				data.Add("requestPath", url);
 
-                webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
-            }
-            catch (Exception)
-            {
+				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
+			}
+			catch (Exception)
+			{
 
-            }
+			}
 		}
 
 		private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, String url)
 		{
-            try
-            {
-			    Dictionary<String, object> data = new Dictionary<String, object>();
-			    data.Add("requestPath", url);
+			try
+			{
+				Dictionary<String, object> data = new Dictionary<String, object>();
+				data.Add("requestPath", url);
 
-			    webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
-            }
-            catch (Exception)
-            {
+				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
+			}
+			catch (Exception)
+			{
 
-            }
-        }
+			}
+		}
 
 		private void Finish ()
 		{
