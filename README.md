@@ -146,11 +146,17 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
 
     // Optional for channels restriction 
-    String[] allowedChannels = new String[] { "credit", "credit3", null };
+    String[] allowedChannels = new String[] { "", "", };
     paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
 
     // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
     paymentDetails.Add(MOLPay.mp_express_mode, false);
+
+    // Optional, enable this for extended email format validation based on W3C standards.
+    paymentDetails.Add(MOLPay.mp_advanced_email_validation_enabled, false);
+
+    // Optional, enable this for extended phone format validation based on Google i18n standards.
+    paymentDetails.Add(MOLPay.mp_advanced_phone_validation_enabled, false);
 
 ## Start the payment module UI
 
