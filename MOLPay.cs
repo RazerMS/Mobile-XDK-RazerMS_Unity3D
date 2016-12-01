@@ -13,65 +13,67 @@ namespace MOLPayXDK
 {
 	public class MOLPay : MonoBehaviour
 	{
-		public const String mp_amount = "mp_amount";
-		public const String mp_username = "mp_username";
-		public const String mp_password = "mp_password";
-		public const String mp_merchant_ID = "mp_merchant_ID";
-		public const String mp_app_name = "mp_app_name";
-		public const String mp_order_ID = "mp_order_ID";
-		public const String mp_currency = "mp_currency";
-		public const String mp_country = "mp_country";
-		public const String mp_verification_key = "mp_verification_key";
-		public const String mp_channel = "mp_channel";
-		public const String mp_bill_description = "mp_bill_description";
-		public const String mp_bill_name = "mp_bill_name";
-		public const String mp_bill_email = "mp_bill_email";
-		public const String mp_bill_mobile = "mp_bill_mobile";
-		public const String mp_channel_editing = "mp_channel_editing";
-		public const String mp_editing_enabled = "mp_editing_enabled";
-		public const String mp_transaction_id = "mp_transaction_id";
-		public const String mp_request_type = "mp_request_type";
-		public const String mp_is_escrow = "mp_is_escrow";
-		public const String mp_bin_lock = "mp_bin_lock";
-		public const String mp_bin_lock_err_msg = "mp_bin_lock_err_msg";
-		public const String mp_custom_css_url = "mp_custom_css_url";
-		public const String mp_preferred_token = "mp_preferred_token";
-		public const String mp_tcctype = "mp_tcctype";
-		public const String mp_is_recurring = "mp_is_recurring";
-		public const String mp_sandbox_mode = "mp_sandbox_mode";
-		public const String mp_allowed_channels = "mp_allowed_channels";
-		public const String mp_express_mode = "mp_express_mode";
+		public const string mp_amount = "mp_amount";
+		public const string mp_username = "mp_username";
+		public const string mp_password = "mp_password";
+		public const string mp_merchant_ID = "mp_merchant_ID";
+		public const string mp_app_name = "mp_app_name";
+		public const string mp_order_ID = "mp_order_ID";
+		public const string mp_currency = "mp_currency";
+		public const string mp_country = "mp_country";
+		public const string mp_verification_key = "mp_verification_key";
+		public const string mp_channel = "mp_channel";
+		public const string mp_bill_description = "mp_bill_description";
+		public const string mp_bill_name = "mp_bill_name";
+		public const string mp_bill_email = "mp_bill_email";
+		public const string mp_bill_mobile = "mp_bill_mobile";
+		public const string mp_channel_editing = "mp_channel_editing";
+		public const string mp_editing_enabled = "mp_editing_enabled";
+		public const string mp_transaction_id = "mp_transaction_id";
+		public const string mp_request_type = "mp_request_type";
+		public const string mp_is_escrow = "mp_is_escrow";
+		public const string mp_bin_lock = "mp_bin_lock";
+		public const string mp_bin_lock_err_msg = "mp_bin_lock_err_msg";
+		public const string mp_custom_css_url = "mp_custom_css_url";
+		public const string mp_preferred_token = "mp_preferred_token";
+		public const string mp_tcctype = "mp_tcctype";
+		public const string mp_is_recurring = "mp_is_recurring";
+		public const string mp_sandbox_mode = "mp_sandbox_mode";
+		public const string mp_allowed_channels = "mp_allowed_channels";
+		public const string mp_express_mode = "mp_express_mode";
+		public const string mp_advanced_email_validation_enabled = "mp_advanced_email_validation_enabled";
+		public const string mp_advanced_phone_validation_enabled = "mp_advanced_phone_validation_enabled";
 
 #if UNITY_IOS
-		private const String mpopenmolpaywindow = "mpopenmolpaywindow//";
-		private const String mpcloseallwindows = "mpcloseallwindows//";
-		private const String mptransactionresults = "mptransactionresults//";
-		private const String mprunscriptonpopup = "mprunscriptonpopup//";
-		private const String mppinstructioncapture = "mppinstructioncapture//";
+		private const string mpopenmolpaywindow = "mpopenmolpaywindow//";
+		private const string mpcloseallwindows = "mpcloseallwindows//";
+		private const string mptransactionresults = "mptransactionresults//";
+		private const string mprunscriptonpopup = "mprunscriptonpopup//";
+		private const string mppinstructioncapture = "mppinstructioncapture//";
 #elif UNITY_ANDROID
-		private const String mpopenmolpaywindow = "mpopenmolpaywindow://";
-		private const String mpcloseallwindows = "mpcloseallwindows://";
-		private const String mptransactionresults = "mptransactionresults://";
-		private const String mprunscriptonpopup = "mprunscriptonpopup://";
-		private const String mppinstructioncapture = "mppinstructioncapture://";
+		private const string mpopenmolpaywindow = "mpopenmolpaywindow://";
+		private const string mpcloseallwindows = "mpcloseallwindows://";
+		private const string mptransactionresults = "mptransactionresults://";
+		private const string mprunscriptonpopup = "mprunscriptonpopup://";
+		private const string mppinstructioncapture = "mppinstructioncapture://";
 #endif
 
-		private const String molpayresulturl = "https://www.onlinepayment.com.my/MOLPay/result.php";
-		private const String molpaynbepayurl = "https://www.onlinepayment.com.my/MOLPay/nbepay.php";
-		private const String uniwebview = "uniwebview://";
-		private const String module_id = "module_id";
-		private const String wrapper_version = "wrapper_version";
-		private const String webview_url_prefix = "webview_url_prefix";
+		private const string molpayresulturl = "https://www.onlinepayment.com.my/MOLPay/result.php";
+		private const string molpaynbepayurl = "https://www.onlinepayment.com.my/MOLPay/nbepay.php";
+		private const string uniwebview = "uniwebview://";
+		private const string module_id = "module_id";
+		private const string wrapper_version = "wrapper_version";
+		private const string webview_url_prefix = "webview_url_prefix";
 
-		private Dictionary<String, object> paymentDetails;
-		private String transactionResult;
-		private String finishLoadUrl;
-		private Boolean isClosingReceipt = false;
-		private Boolean hijackWindowOpen = false;
+		private Dictionary<string, object> paymentDetails;
+		private string transactionResult;
+		private string finishLoadUrl;
+		private bool isClosingReceipt = false;
+		private bool hijackWindowOpen = false;
 		private UniWebView mpMainUI, mpMOLPayUI, mpBankUI;
 		private Action<string> callback;
 
-		private String webViewUrl
+		private string webViewUrl
 		{
 			get
 			{
@@ -88,7 +90,7 @@ namespace MOLPayXDK
 		private static extern void _SavePhoto(string readAddr);
 #endif
 
-		public void StartMolpay(Dictionary<String, object> paymentDetails, Action<string> callback)
+		public void StartMolpay(Dictionary<string, object> paymentDetails, Action<string> callback)
 		{
 			this.paymentDetails = paymentDetails;
 			this.callback = callback;
@@ -120,17 +122,16 @@ namespace MOLPayXDK
 		{
 			try
 			{
-				String loadingUrl = string.Empty;
+				string loadingUrl = string.Empty;
 				if (message.rawMessage != null && message.rawMessage != string.Empty)
 				{
-					//Debug.Log("UniWebViewMessage message: " + message.rawMessage);
 					loadingUrl = message.rawMessage.Replace(uniwebview, "");
 				}
 
 				if (loadingUrl != string.Empty && loadingUrl.StartsWith(mpopenmolpaywindow))
 				{
 					mpMainUI.Stop();
-					String base64String = loadingUrl.Replace(mpopenmolpaywindow, "");
+					string base64String = loadingUrl.Replace(mpopenmolpaywindow, "");
 
 #if UNITY_IOS
 					base64String = base64String.Replace ("-", "+");
@@ -138,7 +139,7 @@ namespace MOLPayXDK
 #endif
 
 					byte[] data = Convert.FromBase64String(base64String);
-					String decodedString = Encoding.UTF8.GetString(data);
+					string decodedString = Encoding.UTF8.GetString(data);
 
 					if (decodedString.Length > 0)
 					{
@@ -169,7 +170,7 @@ namespace MOLPayXDK
 				}
 				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mptransactionresults))
 				{
-					String base64String = loadingUrl.Replace(mptransactionresults, "");
+					string base64String = loadingUrl.Replace(mptransactionresults, "");
 
 #if UNITY_IOS
 					base64String = base64String.Replace ("-", "+");
@@ -177,7 +178,7 @@ namespace MOLPayXDK
 #endif
 
 					byte[] data = Convert.FromBase64String(base64String);
-					String decodedString = Encoding.UTF8.GetString(data);
+					string decodedString = Encoding.UTF8.GetString(data);
 
 					if (decodedString.Length > 0)
 					{
@@ -185,11 +186,11 @@ namespace MOLPayXDK
 
 						try
 						{
-							Dictionary<String, object> jsonResult = Json.Deserialize(transactionResult) as Dictionary<String, object>;
+							Dictionary<string, object> jsonResult = Json.Deserialize(transactionResult) as Dictionary<string, object>;
 
 							object requestType;
 							jsonResult.TryGetValue("mp_request_type", out requestType);
-							if (!jsonResult.ContainsKey("mp_request_type") || (String)requestType != "Receipt" || jsonResult.ContainsKey("error_code"))
+							if (!jsonResult.ContainsKey("mp_request_type") || (string)requestType != "Receipt" || jsonResult.ContainsKey("error_code"))
 							{
 								Finish();
 							}
@@ -206,7 +207,7 @@ namespace MOLPayXDK
 				}
 				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mprunscriptonpopup))
 				{
-					String base64String = loadingUrl.Replace(mprunscriptonpopup, "");
+					string base64String = loadingUrl.Replace(mprunscriptonpopup, "");
 
 #if UNITY_IOS
 					base64String = base64String.Replace ("-", "+");
@@ -214,7 +215,7 @@ namespace MOLPayXDK
 #endif
 
 					byte[] data = Convert.FromBase64String(base64String);
-					String decodedString = Encoding.UTF8.GetString(data);
+					string decodedString = Encoding.UTF8.GetString(data);
 
 					if (decodedString.Length > 0)
 					{
@@ -223,7 +224,7 @@ namespace MOLPayXDK
 				}
 				else if (loadingUrl != string.Empty && loadingUrl.StartsWith(mppinstructioncapture))
 				{
-					String base64String = loadingUrl.Replace(mppinstructioncapture, "");
+					string base64String = loadingUrl.Replace(mppinstructioncapture, "");
 
 #if UNITY_IOS
 					base64String = base64String.Replace ("-", "+");
@@ -231,8 +232,8 @@ namespace MOLPayXDK
 #endif
 
 					byte[] data = Convert.FromBase64String(base64String);
-					String decodedString = Encoding.UTF8.GetString(data);
-					Dictionary<String, object> jsonResult = Json.Deserialize(decodedString) as Dictionary<String, object>;
+					string decodedString = Encoding.UTF8.GetString(data);
+					Dictionary<string, object> jsonResult = Json.Deserialize(decodedString) as Dictionary<string, object>;
 
 					object base64ImageUrlData;
 					jsonResult.TryGetValue("base64ImageUrlData", out base64ImageUrlData);
@@ -240,7 +241,7 @@ namespace MOLPayXDK
 					jsonResult.TryGetValue("filename", out filename);
 
 					byte[] imageData = Convert.FromBase64String(base64ImageUrlData.ToString());
-					String imageLocation = Application.persistentDataPath + "/" + filename.ToString();
+					string imageLocation = Application.persistentDataPath + "/" + filename.ToString();
 					File.WriteAllBytes(imageLocation, imageData);
 
 #if UNITY_IOS
@@ -334,7 +335,7 @@ namespace MOLPayXDK
 			return webView;
 		}
 
-		private void LoadFromText(UniWebView webView, String htmlText)
+		private void LoadFromText(UniWebView webView, string htmlText)
 		{
 			webView.LoadHTMLString(htmlText, null);
 			webView.insets = new UniWebViewEdgeInsets(UniWebViewHelper.screenHeight / 12, 0, 0, 0);
@@ -342,11 +343,11 @@ namespace MOLPayXDK
 			webView.Show();
 		}
 
-		private void NativeWebRequestUrlUpdates(UniWebView webView, String url)
+		private void NativeWebRequestUrlUpdates(UniWebView webView, string url)
 		{
 			try
 			{
-				Dictionary<String, object> data = new Dictionary<String, object>();
+				Dictionary<string, object> data = new Dictionary<string, object>();
 				data.Add("requestPath", url);
 
 				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
@@ -357,11 +358,11 @@ namespace MOLPayXDK
 			}
 		}
 
-		private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, String url)
+		private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, string url)
 		{
 			try
 			{
-				Dictionary<String, object> data = new Dictionary<String, object>();
+				Dictionary<string, object> data = new Dictionary<string, object>();
 				data.Add("requestPath", url);
 
 				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
