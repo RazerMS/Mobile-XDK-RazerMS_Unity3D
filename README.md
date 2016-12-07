@@ -10,39 +10,39 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
 ## Recommended configurations
 
-- Unity Version: 5.4.1f1 ++
+    - Unity Version: 5.4.1f1 ++
 
-- UniWebView 2 ++
+    - UniWebView 2 ++
 
-- Minimum Android target version: Android 4.4
+    - Minimum Android target version: Android 4.4
 
-- Minimum iOS target version: 7.0
+    - Minimum iOS target version: 7.0
     
 ## MOLPay Android Caveats
 
-Credit card payment channel is not available in Android 4.1, 4.2, and 4.3. due to lack of latest security (TLS 1.2) support on these Android platforms natively.
+    Credit card payment channel is not available in Android 4.1, 4.2, and 4.3. due to lack of latest security (TLS 1.2) support on these Android platforms natively.
 
 ## Installation
 
-Step 1 - Copy and paste MOLPay.cs into the Assets\ folder of your Unity project.
+    Step 1 - Copy and paste MOLPay.cs into the Assets\ folder of your Unity project.
 
-Step 2 - Copy and paste third party library MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets\ folder of your Unity project.
+    Step 2 - Copy and paste third party library MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets\ folder of your Unity project.
 
-Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into the Assets\StreamingAssets\ folder of your Unity project.
+    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into the Assets\StreamingAssets\ folder of your Unity project.
 
-Step 4 - Copy and paste custom.css into the Assets\StreamingAssets\ folder of your Unity project.
+    Step 4 - Copy and paste custom.css into the Assets\StreamingAssets\ folder of your Unity project.
 
-Step 5 - Copy and paste PhotoManager.h and PhotoManager.m into the Assets\Plugins\iOS\ folder of your Unity project. (Create one if the directory does not exist)
+    Step 5 - Copy and paste PhotoManager.h and PhotoManager.m into the Assets\Plugins\iOS\ folder of your Unity project. (Create one if the directory does not exist)
 
-Step 6 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "Payment images".
+    Step 6 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "Payment images".
 
-Step 7 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
+    Step 7 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
 
-Step 8 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
+    Step 8 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
 
-Step 9 - In Unity Editor, navigate to Assets\Plugins\Android\, check the folders like common_lib, google-play-services_lib, native_plugins_lib, support_lib, voxelbusters_utility_lib, look in Inspector (e.g. common_lib Import Settings), turn off checkbox "Any platform" and turn on checkbox "Android" instead.
+    Step 9 - In Unity Editor, navigate to Assets\Plugins\Android\, check the folders like common_lib, google-play-services_lib, native_plugins_lib, support_lib, voxelbusters_utility_lib, look in Inspector (e.g. common_lib Import Settings), turn off checkbox "Any platform" and turn on checkbox "Android" instead.
 
-Step 10 - Add the result callback function.
+    Step 10 - Add the result callback function.
 
     public void MolpayCallback (string transactionResult)
     {
@@ -171,23 +171,23 @@ Step 10 - Add the result callback function.
     
 ## Cash channel payment process (How does it work?)
 
-This is how the cash channels work on XDK:
+    This is how the cash channels work on XDK:
 
-1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
+    1) The user initiate a cash payment, upon completed, the XDK will pause at the “Payment instruction” screen, the results would return a pending status.
 
-2) The user can then click on “Close” to exit the MOLPay XDK aka the payment screen.
+    2) The user can then click on “Close” to exit the MOLPay XDK aka the payment screen.
 
-3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction" in place of the standard payment screen.
+    3) When later in time, the user would arrive at say 7-Eleven to make the payment, the host app then can call the XDK again to display the “Payment Instruction” again, then it has to pass in all the payment details like it will for the standard payment process, only this time, the host app will have to also pass in an extra value in the payment details, it’s the “mp_transaction_id”, the value has to be the same transaction returned in the results from the XDK earlier during the completion of the transaction. If the transaction id provided is accurate, the XDK will instead show the “Payment Instruction" in place of the standard payment screen.
 
-4) After the user done the paying at the 7-Eleven counter, they can close and exit MOLPay XDK by clicking the “Close” button again.
+    4) After the user done the paying at the 7-Eleven counter, they can close and exit MOLPay XDK by clicking the “Close” button again.
 
 ## XDK built-in checksum validator caveats 
 
-All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
+    All XDK come with a built-in checksum validator to validate all incoming checksums and return the validation result through the "mp_secured_verified" parameter. However, this mechanism will fail and always return false if merchants are implementing the private secret key (which the latter is highly recommended and prefereable.) If you would choose to implement the private secret key, you may ignore the "mp_secured_verified" and send the checksum back to your server for validation. 
 
 ## Private Secret Key checksum validation formula
 
-chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
+    chksum = MD5(mp_merchant_ID + results.msgType + results.txn_ID + results.amount + results.status_code + merchant_private_secret_key)
 
 ## Support
 
