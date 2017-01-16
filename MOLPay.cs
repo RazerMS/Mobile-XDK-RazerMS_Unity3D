@@ -58,8 +58,8 @@ namespace MOLPayXDK
 		private const string mppinstructioncapture = "mppinstructioncapture://";
 #endif
 
-		private const string molpayresulturl = "https://www.onlinepayment.com.my/MOLPay/result.php";
-		private const string molpaynbepayurl = "https://www.onlinepayment.com.my/MOLPay/nbepay.php";
+		private const string molpayresulturl = "MOLPay/result.php";
+		private const string molpaynbepayurl = "MOLPay/nbepay.php";
 		private const string uniwebview = "uniwebview://";
 		private const string module_id = "module_id";
 		private const string wrapper_version = "wrapper_version";
@@ -316,7 +316,7 @@ namespace MOLPayXDK
 					"};" +
 					"} (window.open); ");
 			}
-			NativeWebRequestUrlUpdatesOnFinishLoad(mpMainUI, finishLoadUrl);
+			NativeWebRequestUrlUpdates(mpMainUI, finishLoadUrl);
 		}
 
 		private UniWebView CreateWebView()
@@ -351,21 +351,6 @@ namespace MOLPayXDK
 				data.Add("requestPath", url);
 
 				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdates(" + Json.Serialize(data) + ")");
-			}
-			catch (Exception)
-			{
-
-			}
-		}
-
-		private void NativeWebRequestUrlUpdatesOnFinishLoad(UniWebView webView, string url)
-		{
-			try
-			{
-				Dictionary<string, object> data = new Dictionary<string, object>();
-				data.Add("requestPath", url);
-
-				webView.EvaluatingJavaScript("nativeWebRequestUrlUpdatesOnFinishLoad(" + Json.Serialize(data) + ")");
 			}
 			catch (Exception)
 			{
