@@ -159,6 +159,18 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     // Optional, enable this for extended phone format validation based on Google i18n standards.
     paymentDetails.Add(MOLPay.mp_advanced_phone_validation_enabled, false);
 
+    // Optional, explicitly force disable billing name edit.
+    paymentDetails.Add(MOLPay.mp_bill_name_edit_disabled, true);
+
+    // Optional, explicitly force disable billing email edit.
+    paymentDetails.Add(MOLPay.mp_bill_email_edit_disabled, true);
+
+    // Optional, explicitly force disable billing mobile edit.
+    paymentDetails.Add(MOLPay.mp_bill_mobile_edit_disabled, true);
+
+    // Optional, explicitly force disable billing description edit.
+    paymentDetails.Add(MOLPay.mp_bill_description_edit_disabled, true);
+
 ## Start the payment module UI
 
     molpay.StartMolpay(paymentDetails, MolpayCallback);

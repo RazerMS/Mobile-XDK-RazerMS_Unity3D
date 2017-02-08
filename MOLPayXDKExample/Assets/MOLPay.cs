@@ -43,6 +43,10 @@ namespace MOLPayXDK
 		public const string mp_express_mode = "mp_express_mode";
 		public const string mp_advanced_email_validation_enabled = "mp_advanced_email_validation_enabled";
 		public const string mp_advanced_phone_validation_enabled = "mp_advanced_phone_validation_enabled";
+		public const string mp_bill_name_edit_disabled = "mp_bill_name_edit_disabled";
+		public const string mp_bill_email_edit_disabled = "mp_bill_email_edit_disabled";
+		public const string mp_bill_mobile_edit_disabled = "mp_bill_mobile_edit_disabled";
+		public const string mp_bill_description_edit_disabled = "mp_bill_description_edit_disabled";
 
 #if UNITY_IOS
 		private const string mpopenmolpaywindow = "mpopenmolpaywindow//";
