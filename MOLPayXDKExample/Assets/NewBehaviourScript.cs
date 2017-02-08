@@ -49,6 +49,10 @@ public class NewBehaviourScript : MonoBehaviour
 		//paymentDetails.Add(MOLPay.mp_express_mode, false);
 		//paymentDetails.Add(MOLPay.mp_advanced_email_validation_enabled, false);
 		//paymentDetails.Add(MOLPay.mp_advanced_phone_validation_enabled, false);
+		//paymentDetails.Add(MOLPay.mp_bill_name_edit_disabled, true);
+		//paymentDetails.Add(MOLPay.mp_bill_email_edit_disabled, true);
+		//paymentDetails.Add(MOLPay.mp_bill_mobile_edit_disabled, true);
+		//paymentDetails.Add(MOLPay.mp_bill_description_edit_disabled, true);
 
 		molpay.StartMolpay(paymentDetails, MolpayCallback);
 	}
