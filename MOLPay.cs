@@ -289,7 +289,7 @@ namespace MOLPayXDK
 			if (success)
 			{
 				paymentDetails.Add(module_id, "molpay-mobile-xdk-unity3d");
-				paymentDetails.Add(wrapper_version, "0");
+				paymentDetails.Add(wrapper_version, "1");
 				paymentDetails.Add(webview_url_prefix, uniwebview);
 				webView.EvaluatingJavaScript("updateSdkData(" + Json.Serialize(paymentDetails) + ")");
 				webView.OnLoadComplete -= MPMainUIOnLoadComplete;
@@ -298,11 +298,11 @@ namespace MOLPayXDK
 
 		private void MPMOLPayUIOnLoadBegin(UniWebView webView, string loadingUrl)
 		{
-			if (loadingUrl != null && loadingUrl.StartsWith(molpayresulturl))
+			if (loadingUrl != null && loadingUrl.Contains(molpayresulturl))
 			{
 				NativeWebRequestUrlUpdates(mpMainUI, loadingUrl);
 			}
-			else if (loadingUrl != null && loadingUrl.StartsWith(molpaynbepayurl))
+			else if (loadingUrl != null && loadingUrl.Contains(molpaynbepayurl))
 			{
 				hijackWindowOpen = true;
 			}
