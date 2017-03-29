@@ -289,7 +289,7 @@ namespace MOLPayXDK
 			if (success)
 			{
 				paymentDetails.Add(module_id, "molpay-mobile-xdk-unity3d");
-				paymentDetails.Add(wrapper_version, "1");
+				paymentDetails.Add(wrapper_version, "0");
 				paymentDetails.Add(webview_url_prefix, uniwebview);
 				webView.EvaluatingJavaScript("updateSdkData(" + Json.Serialize(paymentDetails) + ")");
 				webView.OnLoadComplete -= MPMainUIOnLoadComplete;
