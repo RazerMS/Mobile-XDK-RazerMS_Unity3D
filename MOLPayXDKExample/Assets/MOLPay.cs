@@ -245,7 +245,8 @@ namespace MOLPayXDK
 					jsonResult.TryGetValue("filename", out filename);
 
 					byte[] imageData = Convert.FromBase64String(base64ImageUrlData.ToString());
-					string imageLocation = Application.persistentDataPath + "/" + filename.ToString();
+					string[] temp = (Application.persistentDataPath.Replace("Android","")).Split(new string[] { "//" }, System.StringSplitOptions.None);
+					string imageLocation = temp[0] + "/Download/" + filename.ToString();
 					File.WriteAllBytes(imageLocation, imageData);
 
 #if UNITY_IOS
@@ -289,7 +290,7 @@ namespace MOLPayXDK
 			if (success)
 			{
 				paymentDetails.Add(module_id, "molpay-mobile-xdk-unity3d");
-				paymentDetails.Add(wrapper_version, "0");
+				paymentDetails.Add(wrapper_version, "1");
 				paymentDetails.Add(webview_url_prefix, uniwebview);
 				webView.EvaluatingJavaScript("updateSdkData(" + Json.Serialize(paymentDetails) + ")");
 				webView.OnLoadComplete -= MPMainUIOnLoadComplete;
