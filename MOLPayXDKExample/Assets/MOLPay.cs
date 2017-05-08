@@ -47,6 +47,8 @@ namespace MOLPayXDK
 		public const string mp_bill_email_edit_disabled = "mp_bill_email_edit_disabled";
 		public const string mp_bill_mobile_edit_disabled = "mp_bill_mobile_edit_disabled";
 		public const string mp_bill_description_edit_disabled = "mp_bill_description_edit_disabled";
+		public const string mp_language = "mp_language";
+		public const string mp_dev_mode = "mp_dev_mode";
 
 #if UNITY_IOS
 		private const string mpopenmolpaywindow = "mpopenmolpaywindow//";
