@@ -173,6 +173,12 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     // Optional, explicitly force disable billing description edit.
     paymentDetails.Add(MOLPay.mp_bill_description_edit_disabled, true);
 
+    // Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
+    paymentDetails.Add(MOLPayActivity.mp_language, "EN");
+
+    // Optional, enable for online sandbox testing.
+    paymentDetails.Add(MOLPayActivity.mp_dev_mode, false);
+
 ## Start the payment module UI
 
     molpay.StartMolpay(paymentDetails, MolpayCallback);

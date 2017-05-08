@@ -53,6 +53,8 @@ public class NewBehaviourScript : MonoBehaviour
 		//paymentDetails.Add(MOLPay.mp_bill_email_edit_disabled, true);
 		//paymentDetails.Add(MOLPay.mp_bill_mobile_edit_disabled, true);
 		//paymentDetails.Add(MOLPay.mp_bill_description_edit_disabled, true);
+		//paymentDetails.Add(MOLPay.mp_language, "EN");
+		//paymentDetails.Add(MOLPay.mp_dev_mode, false);
 
 		molpay.StartMolpay(paymentDetails, MolpayCallback);
 	}
