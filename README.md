@@ -105,7 +105,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     paymentDetails.Add(MOLPay.mp_country, "MY");
     
     // Optional String.
-    paymentDetails.Add(MOLPay.mp_channel, ""); // Use 'multi' for all available channels option. For individual channel seletion, please refer to "Channel Parameter" in "Channel Lists" in the MOLPay API Spec for Merchant pdf. 
+    paymentDetails.Add(MOLPay.mp_channel, ""); // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv. 
     paymentDetails.Add(MOLPay.mp_bill_description, "");
     paymentDetails.Add(MOLPay.mp_bill_name, "");
     paymentDetails.Add(MOLPay.mp_bill_email, "");
