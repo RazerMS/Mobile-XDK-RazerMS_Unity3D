@@ -34,13 +34,15 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     Step 7 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryUsageDescription" : "Payment images".
 
-    Step 8 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
+    Step 8 - Open Info.plist in XCode (for iOS only) and add this key value pair of type String "NSPhotoLibraryAddUsageDescription" : "Payment images".
 
-    Step 9 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
+    Step 9 - Purchase plugin UniWebView from http://uniwebview.onevcat.com/. After purchasing you should be able to download a Unity package file (e.g. uniwebview_2_7_1.unitypackage). Double click on the file to import it into your unity project.
 
-    Step 10 - In Unity Editor, navigate to Assets\Plugins\Android\, check the folders like common_lib, google-play-services_lib, native_plugins_lib, support_lib, voxelbusters_utility_lib, look in Inspector (e.g. common_lib Import Settings), turn off checkbox "Any platform" and turn on checkbox "Android" instead.
+    Step 10 - Open Cross Platform Native Plugins - Lite Version in Unity Asset Store. You can open it from https://www.assetstore.unity3d.com/en/#!/content/37272 by clicking the "Open in Unity" button. After that import it into your unity project.
 
-    Step 11 - Add the result callback function.
+    Step 11 - In Unity Editor, navigate to Assets\Plugins\Android\, check the folders like common_lib, google-play-services_lib, native_plugins_lib, support_lib, voxelbusters_utility_lib, look in Inspector (e.g. common_lib Import Settings), turn off checkbox "Any platform" and turn on checkbox "Android" instead.
+
+    Step 12 - Add the result callback function.
 
     public void MolpayCallback (string transactionResult)
     {
