@@ -2,6 +2,8 @@
 # license: Copyright © 2011-2016 MOLPay Sdn Bhd. All Rights Reserved. 
 -->
 
+<img src="https://user-images.githubusercontent.com/38641542/39353138-654385dc-4a39-11e8-9710-19e5f03ec62e.jpg">
+
 # molpay-mobile-xdk-unity3d
 
 This is the complete and functional MOLPay Unity payment module that is ready to be implemented into Unity project through Unity C# script copy and paste. An example application project (MOLPayXDKExample) is provided for MOLPayXDK Unity integration reference.
