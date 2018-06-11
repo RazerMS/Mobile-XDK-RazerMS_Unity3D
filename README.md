@@ -18,7 +18,7 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     - Minimum Android target version: Android 4.4
 
-    - Minimum iOS target version: 7.0
+    - Minimum iOS target version: 8.0
 
 ## Installation
 
@@ -178,6 +178,12 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 
     // Optional, enable for online sandbox testing.
     paymentDetails.Add(MOLPay.mp_dev_mode, false);
+
+    // Optional, Cash channel payment request expiration duration in hour.
+    //paymentDetails.Add(MOLPay.mp_cash_waittime, "48");
+
+    // Optional, allow non-3ds on some credit card channels.
+    //paymentDetails.Add(MOLPay.mp_non_3DS, false);
 
 ## Start the payment module UI
 
