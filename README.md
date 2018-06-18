@@ -93,8 +93,9 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
 ## Prepare the Payment detail object
 
     Dictionary<String, object> paymentDetails = new Dictionary<String, object>();
-    // Mandatory String. A value more than '1.00'
-    paymentDetails.Add(MOLPay.mp_amount, "");
+
+    // Optional, REQUIRED when use online Sandbox environment and account credentials.
+    paymentDetails.Add(MOLPay.mp_dev_mode, false);
 
     // Mandatory String. Values obtained from MOLPay
     paymentDetails.Add(MOLPay.mp_username, "");
@@ -104,86 +105,93 @@ This plugin provides an integrated MOLPay payment module that contains a wrapper
     paymentDetails.Add(MOLPay.mp_verification_key, "");
 
     // Mandatory String. Payment values
+    paymentDetails.Add(MOLPay.mp_amount, ""); // Minimum 1.01
     paymentDetails.Add(MOLPay.mp_order_ID, "");
-    paymentDetails.Add(MOLPay.mp_currency, "MYR");
-    paymentDetails.Add(MOLPay.mp_country, "MY");
-    
-    // Optional String.
+    paymentDetails.Add(MOLPay.mp_currency, "");
+    paymentDetails.Add(MOLPay.mp_country, "");
+
+    // Optional, but required payment values. User input will be required when values not passed.
     paymentDetails.Add(MOLPay.mp_channel, ""); // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv. 
     paymentDetails.Add(MOLPay.mp_bill_description, "");
     paymentDetails.Add(MOLPay.mp_bill_name, "");
     paymentDetails.Add(MOLPay.mp_bill_email, "");
     paymentDetails.Add(MOLPay.mp_bill_mobile, "");
-    paymentDetails.Add(MOLPay.mp_channel_editing, false); // Option to allow channel selection.
-    paymentDetails.Add(MOLPay.mp_editing_enabled, false); // Option to allow billing information editing.
+
+    // Optional, allow channel selection. 
+    paymentDetails.Add(MOLPay.mp_channel_editing, false);
+
+    // Optional, allow billing information editing.    
+    paymentDetails.Add(MOLPay.mp_editing_enabled, false);
 
     // Optional for Escrow
     paymentDetails.Add(MOLPay.mp_is_escrow, ""); // Optional for Escrow, put "1" to enable escrow
 
-    // Optional for credit card BIN restrictions
+    // Optional, for credit card BIN restrictions and campaigns.
     String[] binlock = new String[] { "", "" };
-    paymentDetails.Add(MOLPay.mp_bin_lock, binlock); // Optional for credit card BIN restrictions
-    paymentDetails.Add(MOLPay.mp_bin_lock_err_msg, ""); // Optional for credit card BIN restrictions
+    paymentDetails.Add(MOLPay.mp_bin_lock, binlock);
 
-    // For transaction request use only, do not use this on payment process
-    paymentDetails.Add(MOLPay.mp_transaction_id, ""); // Optional, provide a valid cash channel transaction id here will display a payment instruction screen.
-    paymentDetails.Add(MOLPay.mp_request_type, ""); // Optional, set 'Status' when performing a transactionRequest
+    // Optional, for mp_bin_lock alert error.
+    paymentDetails.Add(MOLPay.mp_bin_lock_err_msg, "");
 
-    // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file is provided at Example project source for reference and implementation.
+    // WARNING! FOR TRANSACTION QUERY USE ONLY, DO NOT USE THIS ON PAYMENT PROCESS.
+    // Optional, provide a valid cash channel transaction id here will display a payment instruction screen. Required if mp_request_type is 'Receipt'.
+    paymentDetails.Add(MOLPay.mp_transaction_id, "");
+    // Optional, use 'Receipt' for Cash channels, and 'Status' for transaction status query.
+    paymentDetails.Add(MOLPay.mp_request_type, "");
+
+    // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/custom.css.
     #if UNITY_IOS
         paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
     #elif UNITY_ANDROID
         paymentDetails.Add(MOLPay.mp_custom_css_url, "file:///android_asset/custom.css");
     #endif
 
-    // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only
+    // Optional, set the token id to nominate a preferred token as the default selection, set "new" to allow new card only.
     paymentDetails.Add(MOLPay.mp_preferred_token, "");
 
-    // Optional, credit card transaction type, set "AUTH" to authorize the transaction
+    // Optional, credit card transaction type, set "AUTH" to authorize the transaction.
     paymentDetails.Add(MOLPay.mp_tcctype, "");
 
-    // Optional, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf
+    // Optional, required valid credit card channel, set true to process this transaction through the recurring api, please refer the MOLPay Recurring API pdf 
     paymentDetails.Add(MOLPay.mp_is_recurring, false);
 
-    // Optional for sandboxed development environment, set boolean value to enable
-    paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
-
-    // Optional for channels restriction 
+    // Optional, show nominated channels.
     String[] allowedChannels = new String[] { "", "" };
     paymentDetails.Add(MOLPay.mp_allowed_channels, allowedChannels);
+
+    // Optional, simulate offline payment, set boolean value to enable. 
+    paymentDetails.Add(MOLPay.mp_sandbox_mode, false);
 
     // Optional, required a valid mp_channel value, this will skip the payment info page and go direct to the payment screen.
     paymentDetails.Add(MOLPay.mp_express_mode, false);
 
-    // Optional, enable this for extended email format validation based on W3C standards.
+    // Optional, extended email format validation based on W3C standards.
     paymentDetails.Add(MOLPay.mp_advanced_email_validation_enabled, false);
 
-    // Optional, enable this for extended phone format validation based on Google i18n standards.
+    // Optional, extended phone format validation based on Google i18n standards.
     paymentDetails.Add(MOLPay.mp_advanced_phone_validation_enabled, false);
 
-    // Optional, explicitly force disable billing name edit.
+    // Optional, explicitly force disable user input.
     paymentDetails.Add(MOLPay.mp_bill_name_edit_disabled, true);
-
-    // Optional, explicitly force disable billing email edit.
     paymentDetails.Add(MOLPay.mp_bill_email_edit_disabled, true);
-
-    // Optional, explicitly force disable billing mobile edit.
     paymentDetails.Add(MOLPay.mp_bill_mobile_edit_disabled, true);
-
-    // Optional, explicitly force disable billing description edit.
     paymentDetails.Add(MOLPay.mp_bill_description_edit_disabled, true);
 
     // Optional, EN, MS, VI, TH, FIL, MY, KM, ID, ZH.
     paymentDetails.Add(MOLPay.mp_language, "EN");
-
-    // Optional, enable for online sandbox testing.
-    paymentDetails.Add(MOLPay.mp_dev_mode, false);
 
     // Optional, Cash channel payment request expiration duration in hour.
     //paymentDetails.Add(MOLPay.mp_cash_waittime, "48");
 
     // Optional, allow non-3ds on some credit card channels.
     //paymentDetails.Add(MOLPay.mp_non_3DS, false);
+
+    // Optional, disable card list option.
+    paymentDetails.Add(MOLPay.mp_card_list_disabled, false);
+
+    // Optional for channels restriction, this option has less priority than mp_allowed_channels.
+    String disabledChannels[] = {"credit"};
+    paymentDetails.Add(MOLPay.mp_disabled_channels, disabledChannels);
 
 ## Start the payment module UI
 
