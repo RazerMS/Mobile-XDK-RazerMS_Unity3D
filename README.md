@@ -8,7 +8,7 @@
 
 This is the complete and functional Razer Merchant Services Unity payment module that is ready to be implemented into Unity project through Unity C# script copy and paste. An example application project (MOLPayXDKExample) is provided for Razer Merchant Services XDK Unity integration reference.
 
-This plugin provides an integrated Razer Merchant Services payment module that contains a wrapper 'MOLPay.cs' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www and update the local version.
+This plugin provides an integrated Razer Merchant Services payment module that contains a wrapper 'MOLPay.cs' and an upgradable core as the 'molpay-mobile-xdk-www' folder, which the latter can be separately downloaded at https://github.com/RazerMS/rms-mobile-xdk-www and update the local version.
 
 ## Recommended configurations
 
