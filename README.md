@@ -26,7 +26,7 @@ This plugin provides an integrated Razer Merchant Services payment module that c
 
     Step 2 - Copy and paste third party library MiniJSON.cs (can be separately downloaded at https://gist.github.com/darktable/1411710#file-minijson-cs) into the Assets\ folder of your Unity project.
 
-    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/MOLPay/molpay-mobile-xdk-www) into the Assets\StreamingAssets\ folder of your Unity project.
+    Step 3 - Copy and paste molpay-mobile-xdk-www folder (can be separately downloaded at https://github.com/RazerMS/rms-mobile-xdk-www) into the Assets\StreamingAssets\ folder of your Unity project.
 
     Step 4 - Copy and paste custom.css into the Assets\StreamingAssets\ folder of your Unity project.
 
@@ -111,7 +111,7 @@ This plugin provides an integrated Razer Merchant Services payment module that c
     paymentDetails.Add(MOLPay.mp_country, "");
 
     // Optional, but required payment values. User input will be required when values not passed.
-    paymentDetails.Add(MOLPay.mp_channel, ""); // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/channel_list.tsv. 
+    paymentDetails.Add(MOLPay.mp_channel, ""); // Use 'multi' for all available channels option. For individual channel seletion, please refer to https://github.com/RazerMS/rms-mobile-xdk-examples/blob/master/channel_list.tsv. 
     paymentDetails.Add(MOLPay.mp_bill_description, "");
     paymentDetails.Add(MOLPay.mp_bill_name, "");
     paymentDetails.Add(MOLPay.mp_bill_email, "");
@@ -139,7 +139,7 @@ This plugin provides an integrated Razer Merchant Services payment module that c
     // Optional, use 'Receipt' for Cash channels, and 'Status' for transaction status query.
     paymentDetails.Add(MOLPay.mp_request_type, "");
 
-    // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/MOLPay/molpay-mobile-xdk-examples/blob/master/custom.css.
+    // Optional, use this to customize the UI theme for the payment info screen, the original XDK custom.css file can be obtained at https://github.com/RazerMS/rms-mobile-xdk-examples/blob/master/custom.css.
     #if UNITY_IOS
         paymentDetails.Add(MOLPay.mp_custom_css_url, Application.streamingAssetsPath + "/custom.css");
     #elif UNITY_ANDROID
