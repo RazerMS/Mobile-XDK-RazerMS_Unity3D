@@ -2,9 +2,9 @@
 # license: Copyright © 2011-2016 Razer Merchant Services Sdn Bhd. All Rights Reserved. 
 -->
 
-<img src="https://user-images.githubusercontent.com/38641542/74150364-ba947500-4c44-11ea-8d79-ae8cd4352816.jpg">
-
 # rms-mobile-xdk-unity3d
+
+<img src="https://user-images.githubusercontent.com/38641542/74424311-a9d64000-4e8c-11ea-8d80-d811cfe66972.jpg">
 
 This is the complete and functional Razer Merchant Services Unity payment module that is ready to be implemented into Unity project through Unity C# script copy and paste. An example application project (MOLPayXDKExample) is provided for Razer Merchant Services XDK Unity integration reference.
 
