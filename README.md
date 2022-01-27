@@ -2,7 +2,7 @@
 # license: Copyright © 2011-2016 Razer Merchant Services Sdn Bhd. All Rights Reserved. 
 -->
 
-# rms-mobile-xdk-unity3d
+# [Mobile XDK] RazerMS Unity3D
 
 <img src="https://user-images.githubusercontent.com/38641542/74424311-a9d64000-4e8c-11ea-8d80-d811cfe66972.jpg">
 
