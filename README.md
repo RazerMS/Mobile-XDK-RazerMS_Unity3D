@@ -24,7 +24,7 @@ This plugin provides an integrated Razer Merchant Services payment module that c
 
 ## Installation Guidance
 
-[Installation](https://github.com/RazerMS/rms-mobile-xdk-unity3d/wiki/Installation)
+[Installation](https://github.com/RazerMS/rms-mobile-xdk-unity3d/wiki/Installation-Guidance)
 
 ## Support
 
